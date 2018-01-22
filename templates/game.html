@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css">
-        <link rel="stylesheet" type="text/css" href="stylesheets/play.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/game.css">
         <title>play</title>
     </head>
     <body>
@@ -14,9 +14,16 @@
                 <li><a href="rankings.html">rankings</a></li>
             </ul>
         </div>
-        <div id="title">
-            <h1>play</h1>
+        <div id="question">
+            <p>{{ question1 }}</p>
         </div>
 
+        <div id="options">
+            <input type="radio" name="option" value="1">{{option one}}</input><br>
+            <input type="radio" name="option" value="2">{{option two}}</input><br>
+            <input type="radio" name="option" value="3">{{option three}}</input><br>
+            <input type="radio" name="option" value="4">{{option four}}</input><br>
+            <input id="next" type="submit" value="next"></input>
+        </div>
     </body>
 </html>
