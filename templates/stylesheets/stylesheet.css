@@ -1,0 +1,153 @@
+body{
+    font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Roboto", "Avenir";
+    font-size: 14px;
+    color: #333333;
+    background-image: url("img/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: auto;
+    text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#logo{
+    position: absolute;
+    width: 109px;
+    height: 27px;
+    margin-top: 15px;
+    margin-left: 10%;
+    text-align: center;
+}
+
+#logoY{
+    position: absolute;
+    width: 109px;
+    height: 27px;
+    margin-top: 15px;
+    margin-left: 10%;
+    text-align: center;
+    border-bottom: 3px solid black;
+}
+
+#logo a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+#logoY a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+#navbar{
+    width: auto;
+    height: 45px;
+    background-color: white;
+}
+
+#navbar ul{
+    display: block;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+#navbar li{
+    display: inline-block;
+    width: auto;
+    margin-left: 5px;
+    margin-right: 20px;
+    height: 27px;
+    padding-top: 16px;
+    position: relative;
+}
+
+li a{
+    text-decoration: none;
+    color: #333333;
+}
+
+#blue{
+    border-bottom: 3px solid #009DDC;
+}
+
+#blue a{
+    color: #009DDC;
+}
+
+#title{
+    width: 380px;
+    height: 50px;
+    background-color: white;
+    margin: auto;
+    margin-top: 50px;
+    display: block;
+}
+
+#title h1{
+    text-align: center;
+    padding-top: 8px;
+    font-weight: 500;
+    font-size: 28px;
+}
+
+#text{
+    width: 380px;
+    height: 180px;
+    background-color: white;
+    margin: auto;
+    margin-top: 50px;
+    display: block;
+}
+
+#text p{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 26px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+#selects, #selects2{
+    width: 200px;
+    height: 30px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #009DDC;
+    color: white;
+    border: 0px;
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#selects2{
+    margin-top: 30px;
+}
+
+#submit, #submit2{
+    width: 90px;
+    height: 40px;
+    background-color: #009DDC;
+    border: 0px;
+    border-radius: 5px;
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 14px;
+}
+
+#submit:hover, #submit2:hover{
+    color: white;
+    background-color: black;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#submit2{
+    margin-top: 108px;
+}
