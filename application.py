@@ -4,7 +4,6 @@ import urllib.request
 
 keuzeantwoorden = []
 
-
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
@@ -35,8 +34,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
-
+db = SQL("sqlite:///trivia.db")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -69,6 +67,8 @@ def register():
         # zoeken naar naam en als het al bestaat, moet dit vermeld worden
         info = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)",
         username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password"), country=country))
+
+        namen = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")))
         if not namen:
             return apology("Username taken!")
 
