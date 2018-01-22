@@ -1,0 +1,26 @@
+#question{
+    width: auto;
+    height: 50px;
+    background-color: white;
+    max-width: 70%;
+    margin: auto;
+    text-align: center;
+    padding-top: 5px;
+    font-size: 18px;
+    margin-top: 50px;
+}
+
+#options{
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#options input{
+    width: 50px;
+    height: 16px;
+    margin-left: calc(50% - 30px);
+    margin-top: 40px;
+}

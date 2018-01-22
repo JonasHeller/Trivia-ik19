@@ -1,0 +1,57 @@
+#points{
+    width: 470px;
+    height: 26px;
+    background-color: white;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: calc(50% - 235px);
+}
+
+#big{
+    width: 400px;
+    height: 450px;
+    margin-left: calc(50% - 200px);
+    margin-top: 50px;
+    overflow: scroll;
+}
+
+#first{
+    width: 400px;
+    height: 45px;
+}
+
+#count{
+    width: 60px;
+    height: 26px;
+    background-color: white;
+    text-align: center;
+    display: inline-block;
+    padding-top: 8px;
+    margin-top: 5px;
+}
+
+#name{
+    width: 200px;
+    height: 30px;
+    background-color: white;
+    text-align: center;
+    display: inline-block;
+    padding-top: 8px;
+    margin-left: 28px;
+}
+
+#punten{
+    width: 80px;
+    height: 26px;
+    background-color: white;
+    text-align: center;
+    display: inline-block;
+    padding-top: 8px;
+    margin-left: 25px;
+}
+
+#select select{
+    margin-bottom: 50px;
+    margin-top: 0px;
+    margin-left: calc(50% - 110px);
+}
