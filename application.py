@@ -24,8 +24,6 @@ if app.config["DEBUG"]:
         response.headers["Pragma"] = "no-cache"
         return response
 
-# custom filter
-app.jinja_env.filters["usd"] = usd
 
 # configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
@@ -36,6 +34,9 @@ Session(app)
 # configure CS50 Library to use SQLite database
 db = SQL("sqlite:///trivia.db")
 
+@app.route("/")
+def index():
+    return render_template("indexnot.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -52,7 +53,7 @@ def register():
             return apology("Missing username!")
         elif request.form["password"] == "":
             return apology("Missing password!")
-        elif request.form["password_confirmation"] == "":
+        elif request.form["passwordagain"] == "":
             return apology("Missing repeat password!")
         elif request.form["country"] == "":
             return apology("Missing country!")
@@ -61,37 +62,22 @@ def register():
         country = request.form["country"]
 
         # Controle of het wachtwoord overeenkomt
-        elif request.form["password_confirmation"] != request.form["password"]:
+        if request.form.get("passwordagain") != request.form.get("password"):
              return apology("Password and repeated password are not equal")
 
-        # zoeken naar naam en als het al bestaat, moet dit vermeld worden
-        info = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)",
-        username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password"), country=country))
 
-        namen = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")))
+        namen = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")), country = request.form.get("country"))
+
         if not namen:
             return apology("Username taken!")
 
-        # query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+        session['user_id'] = namen
 
-        # ensure username exists and password is correct
-        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            return apology("Invalid username and/or password")
-
-        # remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-
-        # redirect user to home page
         return redirect(url_for("index"))
 
         # GET methode
     else:
-        return render_template("register.html")
-    return
-
-    return apology("WELKOM!")
-
+        return render_template("indexnot.html")
 
 @app.route("/password", methods=["GET", "POST"])
 def password():
@@ -100,9 +86,9 @@ def password():
     if request.method == "POST":
 
         # missing information
-        if not request.form.get("oldpassword"):
+        if not request.form.get("old_password"):
             return apology("must enter old password")
-        elif not request.for.get("new_password"):
+        elif not request.form.get("new_password"):
             return apology("must enter new password")
         elif not request.form.get("confirmation"):
             return apology("must enter new password again")
@@ -135,7 +121,7 @@ def country():
         # missing information
         if not request.form.get("old_country"):
             return apology("must enter old country")
-        elif not request.for.get("new_country"):
+        elif not request.form.get("new_country"):
             return apology("must enter new country")
         elif not request.form.get("confirmation"):
             return apology("must enter new country again")
@@ -160,48 +146,48 @@ def country():
 
 
 app.route("/ranking", methods=["GET", "POST"])
-def ranking():
-    '''Ranking'''
-    # POST methode
-    if request.method == "POST":
+#def ranking():
+#    '''Ranking'''
+#    # POST methode
+#    if request.method == "POST":
 
-        def wereldranking():
-            db.execute("SELECT * FROM users ORDER BY DESC;
+#        def wereldranking():
+#            db.execute("SELECT * FROM users ORDER BY DESC;
+#
+#                        WITH  Result AS
+#                        (
+#                        SELECT points,
+#                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
+#                        FROM users
+#                        )
+#                        SELECT TOP 10 points FROM Result")
+#
+#        def eigenranking():
+#            id = session["user_id"]
+#            db.execute("SELECT * FROM users ORDER BY DESC;
 
-                        WITH  Result AS
-                        (
-                        SELECT points,
-                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
-                        FROM users
-                        )
-                        SELECT TOP 10 points FROM Result")
+#                        WITH  Result AS
+#                        (
+#                        SELECT points,
+#                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
+#                        FROM users
+#                        )
+#                        SELECT TOP 1 points FROM Result WHERE id=:id")
 
-        def eigenranking():
-            id = session["user_id"]
-            db.execute("SELECT * FROM users ORDER BY DESC;
+#        def landranking():
+#            db.execute("SELECT * FROM users ORDER BY DESC;
 
-                        WITH  Result AS
-                        (
-                        SELECT points,
-                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
-                        FROM users
-                        )
-                        SELECT TOP 1 points FROM Result WHERE id=:id")
-
-        def landranking():
-            db.execute("SELECT * FROM users ORDER BY DESC;
-
-                        WITH  Result AS
-                        (
-                        SELECT points,
-                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
-                        FROM users
-                        )
-                        SELECT TOP 10 points FROM Result WHERE country=request.form.get("country")")
-
-    else:
-        # GET methode
-        return render_template("ranking.html")
+#                        WITH  Result AS
+#                        (
+#                        SELECT points,
+#                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
+#                        FROM users
+#                        )
+#                        SELECT TOP 10 points FROM Result WHERE country=request.form.get("country")")
+#
+#    else:
+#        # GET methode
+#        return render_template("ranking.html")
 
 
 app.route("/play", methods=["GET", "POST"])
@@ -233,9 +219,9 @@ def play():
         difficulty = str(request.form["difficulty"])
         url += str(difficulty)
 
-        if difficulty = 'easy':
+        if difficulty == 'easy':
             punten = 1
-        elif difficulty = 'medium':
+        elif difficulty == 'medium':
             punten = 2
         else:
             punten = 3
@@ -271,12 +257,12 @@ def question():
         random.shuffle(keuzeantwoorden)
 
         # of antwoord goed is
-        if TODO = goedantwoord:
-            TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
-            score += punten
-            return GOED
-        else:
-            return FOUT
+        #if TODO = goedantwoord:
+        #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
+        #    score += punten
+        #    return GOED
+        #else:
+        #    return FOUT
 
     else:
         # GET methode
