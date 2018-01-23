@@ -36,83 +36,59 @@ db = SQL("sqlite:///trivia.db")
 
 @app.route("/")
 def index():
-    return render_template("indexnot.html")
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    """Register user."""
-
-    # clear login
     session.clear()
-
-    # POST methode
     if request.method == "POST":
+        if request.POST.get('submit') == "login":
+            if not request.form.get("username"):
+                return apology("must provide username")
 
-    # Als username, password of repeat password mist
-        if request.form["username"] == "":
-            return apology("Missing username!")
-        elif request.form["password"] == "":
-            return apology("Missing password!")
-        elif request.form["passwordagain"] == "":
-            return apology("Missing repeat password!")
-        elif request.form["country"] == "":
-            return apology("Missing country!")
+            # ensure password was submitted
+            elif not request.form.get("password"):
+                return apology("must provide password")
 
-        # Spelling gelijk maken voor alle landen, kleine letters
-        country = request.form["country"]
+            # query database for username
+            rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
 
-        # Controle of het wachtwoord overeenkomt
-        if request.form.get("passwordagain") != request.form.get("password"):
-             return apology("Password and repeated password are not equal")
+            # ensure username exists and password is correct
+            if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
+                return apology("invalid username and/or password")
+
+            # remember which user has logged in
+            session["user_id"] = rows[0]["id"]
+
+            # redirect user to home page
+            return render_template("index.html")
+        elif request.POST.get("submit") == "register":
+            # Als username, password of repeat password mist
+            if request.form["username"] == "":
+                return apology("Missing username!")
+            elif request.form["password"] == "":
+                return apology("Missing password!")
+            elif request.form["passwordagain"] == "":
+                return apology("Missing repeat password!")
+            elif request.form["country"] == "":
+                return apology("Missing country!")
+
+             # Spelling gelijk maken voor alle landen, kleine letters
+            country = request.form["country"]
+
+            # Controle of het wachtwoord overeenkomt
+            if request.form.get("passwordagain") != request.form.get("password"):
+                return apology("Password and repeated password are not equal")
 
 
-        namen = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")), country = request.form.get("country"))
+            namen = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")), country = request.form.get("country"))
 
-        if not namen:
-            return apology("Username taken!")
+            if not namen:
+                return apology("Username taken!")
 
-        session['user_id'] = namen
+            session['user_id'] = namen
 
-        return render_template("index.html")
-
+            return render_template("index.html")
 
     else:
         return render_template("indexnot.html")
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    """Log user in."""
-
-    # forget any user_id
-    session.clear()
-
-    # if user reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-
-        # ensure username was submitted
-        if not request.form.get("username"):
-            return apology("must provide username")
-
-        # ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("must provide password")
-
-        # query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-
-        # ensure username exists and password is correct
-        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            return apology("invalid username and/or password")
-
-        # remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-
-        # redirect user to home page
-        return render_template("index.html")
-
-    # else if user reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("indexnot.html")
 
 @app.route("/logout")
 def logout():
