@@ -133,7 +133,7 @@ def password():
         return render_template("password.html")
 
 
-app.route("/country", methods=["GET", "POST"])
+@app.route("/country", methods=["GET", "POST"])
 def country():
     '''Country veranderen'''
     # POST methode
@@ -166,9 +166,9 @@ def country():
         return render_template("country.html")
 
 
-app.route("/ranking", methods=["GET", "POST"])
-#def ranking():
-#    '''Ranking'''
+@app.route("/rankings", methods=["GET", "POST"])
+def ranking():
+    '''Ranking'''
 #    # POST methode
 #    if request.method == "POST":
 
@@ -208,10 +208,10 @@ app.route("/ranking", methods=["GET", "POST"])
 #
 #    else:
 #        # GET methode
-#        return render_template("ranking.html")
+    return render_template("rankings.html")
 
 
-app.route("/play", methods=["GET", "POST"])
+@app.route("/play", methods=["GET", "POST"])
 def play():
     '''Play'''
     # POST methode
@@ -220,8 +220,8 @@ def play():
         score = 0
 
         # als er iets mist
-        if request.form["categorie"] == "":
-            return apology("Missing categorie!")
+        if request.form["category"] == "":
+            return apology("Missing category!")
         elif request.form["difficulty"] == "":
             return apology("Missing difficulty!")
 
@@ -229,7 +229,7 @@ def play():
         url = str('https://opentdb.com/api.php?amount=10&category=')
 
         # categorie nummer maken
-        categorie = request.form["categorie"]
+        category = request.form["category"]
         # TODO van categorie naar nummer
         url += str(categorie)
 
@@ -261,9 +261,9 @@ def play():
         return render_template("play.html")
 
 
-app.route("/question", methods=["GET", "POST"])
-def question():
-    '''question'''
+@app.route("/game", methods=["GET", "POST"])
+def game():
+    '''game'''
     # POST methode
     if request.method == "POST":
 
@@ -275,8 +275,8 @@ def question():
         # antwoorden shufflen, keuzeantwoorden is een lijst
         keuzeantwoorden.append(foutantwoorden)
         keuzeantwoorden.append(goedantwoord)
-        random.shuffle(keuzeantwoorden)
-
+        keuzeantwoorden = random.shuffle(keuzeantwoorden)
+        print(keuzeantwoorden)
         # of antwoord goed is
         #if TODO = goedantwoord:
         #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
@@ -285,6 +285,8 @@ def question():
         #else:
         #    return FOUT
 
+
+        return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
     else:
         # GET methode
-        return render_template("play.html")
+        return render_template("game.html")
