@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change country
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('password') }}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="old_country" placeholder="Old Country" type="country"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="new_country" placeholder="Country" type="country"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="confirmation" placeholder="Repeat Country" type="country"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit">Change Country</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
