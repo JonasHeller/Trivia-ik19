@@ -34,11 +34,11 @@ Session(app)
 # configure CS50 Library to use SQLite database
 db = SQL("sqlite:///trivia.db")
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     session.clear()
     if request.method == "POST":
-        if request.POST.get('submit') == "login":
+        if request.form.get('submit') == "login":
             if not request.form.get("username"):
                 return apology("must provide username")
 
@@ -58,7 +58,7 @@ def index():
 
             # redirect user to home page
             return render_template("index.html")
-        elif request.POST.get("submit") == "register":
+        elif request.form.get("submit") == "register":
             # Als username, password of repeat password mist
             if request.form["username"] == "":
                 return apology("Missing username!")
@@ -78,7 +78,7 @@ def index():
 
 
             namen = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")), country = request.form.get("country"))
-
+            print (namen)
             if not namen:
                 return apology("Username taken!")
 
