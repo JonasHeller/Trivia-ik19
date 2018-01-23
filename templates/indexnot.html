@@ -14,22 +14,38 @@
             <h1>register & login</h1>
         </div>
         <div id="all">
-            <div id="container">
-                <div id="boxes">
-                    <input id="fill" type="text" name="username" placeholder="username"></input>
-                    <input id="fill" type="text" name="password" placeholder="password"></input>
-                    <input id="fill" type="text" name="passwordagain" placeholder="password once more"></input>
-                    <input id="fill" type="text" name="country" placeholder="country"></input>
-                    <input id="submit" type="submit" value="register"></input>
-                </div>
-            </div>
-            <div id="container">
-                <div id="boxes">
-                    <input id="fill" type="text" placeholder="username"></input>
-                    <input id="fill" type="text" placeholder="password"></input>
-                    <input id="submit2" type="submit" value="log in"></input>
-                </div>
-            </div>
+            <form action="{{ url_for('index') }}" method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password" placeholder="Password" type="password"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="passwordagain" placeholder="Type password again" type="password"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="country" placeholder="country" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" type="submit">Register</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+            <form action="{{ url_for('index') }}" method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password" placeholder="Password" type="password"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" type="submit">login</button>
+                    </div>
+                </fieldset>
         </div>
     </body>
 </html>
