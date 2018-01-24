@@ -5,6 +5,7 @@
     max-height: 700px;
     text-align: center;
     margin: auto;
+    background-color: grey;
 }
 
 #container{
@@ -13,6 +14,7 @@
     background-color: white;
     overflow: scroll;
     display: inline-block;
+    border: 0px;
     margin-top: 50px;
     margin-left: 20px;
     margin-right: 20px;

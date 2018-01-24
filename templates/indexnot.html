@@ -14,16 +14,14 @@
             <h1>register & login</h1>
         </div>
 
-
-
         <div id="all">
             <!-- register -->
             <div id="container">
             <form action="{{ url_for('index') }}" method="post">
-                <fieldset id="hoi">
-                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-                        <input name="password" placeholder="Password" type="password"/>
-                        <input class="form-control" name="passwordagain" placeholder="Type password again" type="password"/>
+                <fieldset>
+                    <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    <input id="field" name="password" placeholder="Password" type="password"/>
+                    <input id="field" name="passwordagain" placeholder="Type password again" type="password"/>
                     <div id="select">
                         <select name = "country" id="selects">
                             <option value="AF">Afghanistan</option>
@@ -277,18 +275,18 @@
                             <option value="ZW">Zimbabwe</option>
                         </select>
                     </div>
-                        <button id="submit" type="submit" name="submit" value="register">Register</button>
+                    <button id="submit" type="submit" name="submit" value="register">Register</button>
                 </fieldset>
             </form>
             </div>
 
             <!-- login -->
             <div id="container">
-            <form action="{{ url_for('index') }}" id="vlak" method="post">
+            <form action="{{ url_for('index') }}" method="post">
                 <fieldset>
-                        <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-                        <input id="field" name="password" placeholder="Password" type="password"/>
-                        <button id="submit" type="submit" name="submit" value="login">login</button>
+                    <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    <input id="field" name="password" placeholder="Password" type="password"/>
+                    <button id="submit" type="submit" name="submit" value="login">login</button>
                 </fieldset>
             </form>
             </div>
