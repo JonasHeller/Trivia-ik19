@@ -30,3 +30,13 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def question(url):
+    # de vragen opvragen uit de API
+    json_obj = urllib.request.urlopen(url).read()
+    response = urllib.request.urlopen(url).read()
+    json_obj = str(response, 'utf-8')
+    data = json.loads(json_obj)
+
+    return data
+
