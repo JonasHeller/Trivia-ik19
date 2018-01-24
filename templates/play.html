@@ -9,6 +9,8 @@
             <div id="logo">
                 <a href="index">WhoopDeeDoo</a>
             </div>
+            <div id="logout"><a href="indexnot">logout</a>
+            </div>
             <ul>
                 <li id="blue"><a href="play">play</a></li>
                 <li><a href="rankings">rankings</a></li>
@@ -17,34 +19,34 @@
         <div id="title">
             <h1>choose difficulty</h1>
         </div>
-        <select name = "difficulty" id="selects">
-            <option value="easy">easy</option>
-            <option value="medium" selected="selected">medium</option>
-            <option value="hard">hard</option>
-        </select>
-        <select name="category" id="selects2">
-            <option value="0" selected="selected">all categories</option>
-            <option value="09">General Knowledge</option>
-            <option value="10">Books</option>
-            <option value="11">Films</option>
-            <option value="12">Music</option>
-            <option value="13">Musicals & Theatres</option>
-            <option value="14">Television</option>
-            <option value="15">Video Games</option>
-            <option value="16">Board Games</option>
-            <option value="17">Science & Nature</option>
-            <option value="18">Computers</option>
-            <option value="19">Mathematics</option>
-            <option value="20">Mythology</option>
-            <option value="21">Sports</option>
-            <option value="22">Geography</option>
-            <option value="23">History</option>
-            <option value="24">Politics</option>
-            <option value="25">Art</option>
-            <option value="26">Celebrities</option>
-            <option value="27">Animals</option>
-        </select>
-        <form action="game">
+        <form action="{{ url_for('game') }}" method="post">
+                <select name = "difficulty" id="selects">
+                    <option value="easy">easy</option>
+                    <option value="medium" selected="selected">medium</option>
+                    <option value="hard">hard</option>
+                </select>
+                <select name="category" id="selects2">
+                    <option value="0" selected="selected">all categories</option>
+                    <option value="09">General Knowledge</option>
+                    <option value="10">Books</option>
+                    <option value="11">Films</option>
+                    <option value="12">Music</option>
+                    <option value="13">Musicals & Theatres</option>
+                    <option value="14">Television</option>
+                    <option value="15">Video Games</option>
+                    <option value="16">Board Games</option>
+                    <option value="17">Science & Nature</option>
+                    <option value="18">Computers</option>
+                    <option value="19">Mathematics</option>
+                    <option value="20">Mythology</option>
+                    <option value="21">Sports</option>
+                    <option value="22">Geography</option>
+                    <option value="23">History</option>
+                    <option value="24">Politics</option>
+                    <option value="25">Art</option>
+                    <option value="26">Celebrities</option>
+                    <option value="27">Animals</option>
+                </select>
             <input id="submit" type="submit" value="submit">
         </form>
     </body>
