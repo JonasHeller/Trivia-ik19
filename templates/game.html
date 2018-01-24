@@ -19,15 +19,16 @@
         <div id="question">
             <p>{{question}}</p>
         </div>
-
-        <div id="options">
-            <input type="radio" name="option" value="1">{{option_one}}</input><br>
-            <input type="radio" name="option" value="2">{{option_two}}</input><br>
-            <input type="radio" name="option" value="3">{{option_three}}</input><br>
-            <input type="radio" name="option" value="4">{{option_four}}</input><br>
-            <div class="form-group">
-                <button class="btn btn-default" type="submit" name="submit" value="next">Next question</button>
+        <form action="{{ url_for('game') }}" method="post">
+            <div name="answer" id="options">
+                <input type="radio" name="option" value="0">{{option_one}}</input><br>
+                <input type="radio" name="option" value="1">{{option_two}}</input><br>
+                <input type="radio" name="option" value="2">{{option_three}}</input><br>
+                <input type="radio" name="option" value="3">{{option_four}}</input><br>
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit" name="submit" value="next">Next question</button>
+                </div>
             </div>
-        </div>
+        </form>
     </body>
 </html>

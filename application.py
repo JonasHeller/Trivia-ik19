@@ -262,68 +262,56 @@ def game():
     '''game'''
     # POST methode
     if request.method == "POST":
-        keuzeantwoorden = []
-        url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
-        # initialize, vraag i
-        i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
-        if i == 10:
-            return render_template("endpage.html")
 
-        vraag = data["results"][i]["question"]
-        foutantwoorden = data["results"][i]["incorrect_answers"]
-        goedantwoord = data["results"][i]["correct_answer"]
-        data = []
-        data.append("hoi")
-        # antwoorden shufflen, keuzeantwoorden is een lijst
-        keuzeantwoorden.append(foutantwoorden)
-        keuzeantwoorden.append(goedantwoord)
-        keuzeantwoorden = random.shuffle(keuzeantwoorden)
-        print(data)
+        # goede antwoordpositie eruit halen
+        goedantwoord = db.execute("SELECT correct FROM users WHERE id=:id",id=session["user_id"])
+        goedantwoord = goedantwoord[0]['correct']
+
         # of antwoord goed is
-        #if TODO = goedantwoord:
-        #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
-        #    score += punten
-        #    return GOED
-        #else:
-        #    return FOUT
-        i += 1
-        db.execute("UPDATE qnumber FROM users WHERE id=:id",id=session["user_id"], qnumber=i)
+        if request.form.get("option") == goedantwoord:
+            print("goed")
 
+        # score += punten
+        else:
+            print("fout")
 
-        return render_template("game.html", question = vraag, option_one = "dit is optie 1", option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
+        return redirect(url_for("game"))
 
     else:
         # GET methode
         keuzeantwoorden = []
+
         # initialize, vraag i
-        i = 0
-        print(i)
+        i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
+        i = i[0]['qnumber']
         url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
 
         #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
-        if i == 10:
+        if i == 9:
+            i = 0
+            db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
             return render_template("endpage.html")
         data = question(url[0]["url"])
 
         vraag = data["results"][0]["question"]
-        foutantwoorden = data["results"][i]["incorrect_answers"]
-        goedantwoord = data["results"][i]["correct_answer"]
+        foutantwoorden = data["results"][0]["incorrect_answers"]
+        goedantwoord = data["results"][0]["correct_answer"]
 
         # antwoorden shufflen, keuzeantwoorden is een lijst
         keuzeantwoorden.append(foutantwoorden[0])
         keuzeantwoorden.append(foutantwoorden[1])
         keuzeantwoorden.append(foutantwoorden[2])
         keuzeantwoorden.append(goedantwoord)
-        keuzeantwoorden = random.shuffle(keuzeantwoorden)
-        # of antwoord goed is
-        #if TODO = goedantwoord:
-        #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
-        #    score += punten
-        #    return GOED
-        #else:
-        #    return FOUT
+        random.shuffle(keuzeantwoorden)
+
+        # goede positie in de lijst als antwoord
+        goedpositie = [i for i,x in enumerate(keuzeantwoorden) if x == goedantwoord]
+        db.execute("UPDATE users SET correct = :correct WHERE id = :id", correct = goedpositie, id=session["user_id"])
+
+        # update qnumber
         i += 1
-        #db.execute("UPDATE qnumber FROM users WHERE id=:id",id=session["user_id"], qnumber=i)
+        db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
+
         return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
 
 @app.route("/index", methods=["GET","POST"])
