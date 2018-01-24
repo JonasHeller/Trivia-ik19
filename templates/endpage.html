@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='rankings.css') }}" rel="stylesheet"/>
+        <title>rankings</title>
+    </head>
+    <body>
+        <div id="navbar">
+            <div id="logo">
+                <a href="index">WhoopDeeDoo</a>
+            </div>
+            <div id="logout"><a href="indexnot">logout</a>
+            </div>
+            <ul>
+                <li><a href="play">play</a></li>
+                <li id="blue"><a href="rankings">rankings</a></li>
+            </ul>
+        </div>
+        <div id="title"><h1>well done!</h2>
+        <div id="points">you have added{{users.added}} points and your rank is now {{ users.rank }}</div>
+
+    </body>
+</html>

@@ -9,8 +9,17 @@ body{
     text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-form{
-    border: 0px;
+#much{
+    width: 50%;
+    height: auto;
+    text-align: center;
+    margin: auto;
+}
+
+#much img{
+    width: 50%;
+    height: auto;
+    margin: auto;
 }
 
 #logo{
