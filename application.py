@@ -181,7 +181,7 @@ def play():
     '''Play'''
     # POST methode
     if request.method == "POST":
-
+        db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = 0)
         db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = 0)
 
         # voorbeeld URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
@@ -257,8 +257,6 @@ def game():
 
         #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 9:
-            i = 0
-            db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
             return redirect(url_for("end"))
         data = question(url[0]["url"])
 
