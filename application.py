@@ -2,7 +2,6 @@ import urllib
 import json
 import urllib.request
 
-keuzeantwoorden = []
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -219,12 +218,6 @@ def play():
 
         score = 0
 
-        # als er iets mist
-        if request.form["category"] == "":
-            return apology("Missing category!")
-        elif request.form["difficulty"] == "":
-            return apology("Missing difficulty!")
-
         # voorbeeld URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
         url = str('https://opentdb.com/api.php?amount=10&category=')
 
@@ -266,7 +259,7 @@ def game():
     '''game'''
     # POST methode
     if request.method == "POST":
-
+        keuzeantwoorden = []
         # initialize, vraag i
         vraag = data["results"][i]["question"]
         foutantwoorden = data["results"][i]["incorrect_answers"]
