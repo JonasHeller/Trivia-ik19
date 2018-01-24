@@ -1,15 +1,14 @@
-
-
-{% block title %}
-    Apology
-{% endblock %}
-
-{% block main %}
-<link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
-    <div class="container">
-        <img alt="Sorry!" src="http://i.imgur.com/uSDmoXX.jpg/{{bottom | urlencode}}"/>
-        <div class="top">{{urlencode}}</div>
-    </div>
-
-
-{% endblock %}
+<html>
+    <head>
+        <title>sorry</title>
+        <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
+    </head>
+    <body>
+        <div id="much">
+            <img alt="Sorry!" src="http://i.imgur.com/uSDmoXX.jpg">
+            <div id="excuse">
+                <h2>You have to give up both a username and a password.</h2>
+            </div>
+        </div>
+    </body>
+</html>
