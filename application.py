@@ -171,8 +171,19 @@ def country():
 @app.route("/rankings", methods=["GET", "POST"])
 @login_required
 def ranking():
+    dic = []
+    info = db.execute("SELECT * FROM users")
+    users = db.execute("SELECT username FROM users")
+    user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
 
-    return render_template("rankings.html")
+    for i in range(len(users)):
+        username = info[i]['username']
+        score = info[i]["score"]
+        dic.append(username)
+        dic.append(score)
+
+
+    return render_template("rankings.html", userpoints = user[0]['score'], user1 = dic[0], score1 = dic[1],user2 = dic[2],user3 = dic[4],user4 = dic[6],user5 = dic[8],user6 = dic[10],user7 = dic[12],user8 = dic[14],user9 = dic[16],user10 = dic[18],score2 = dic[3],score3 = dic[5],score4 = dic[7],score5 = dic[9],score6 = dic[11],score7 = dic[13],score8 = dic[15],score9 = dic[17],score10 = dic[19],)
 
 
 @app.route("/play", methods=["GET", "POST"])
