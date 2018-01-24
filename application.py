@@ -100,6 +100,7 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/password", methods=["GET", "POST"])
+@login_required
 def password():
     '''Wachtwoord veranderen'''
     # POST methode
@@ -133,6 +134,7 @@ def password():
 
 
 @app.route("/country", methods=["GET", "POST"])
+@login_required
 def country():
     '''Country veranderen'''
     # POST methode
@@ -166,6 +168,7 @@ def country():
 
 
 @app.route("/rankings", methods=["GET", "POST"])
+@login_required
 def ranking():
     '''Ranking'''
 #    # POST methode
@@ -211,6 +214,7 @@ def ranking():
 
 
 @app.route("/play", methods=["GET", "POST"])
+@login_required
 def play():
     '''Play'''
     # POST methode
@@ -219,19 +223,19 @@ def play():
         score = 0
 
         # voorbeeld URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
-        url = str('https://opentdb.com/api.php?amount=1&category=')
+        link = str('https://opentdb.com/api.php?amount=1&category=')
 
         # categorie nummer maken
         category = request.form["category"]
         # TODO van categorie naar nummer
-        url += str(categorie)
+        link += str(category)
 
         # & toevoegen
-        url += str('&difficulty=')
+        link += str('&difficulty=')
 
         # difficulty nummer maken
         difficulty = str(request.form["difficulty"])
-        url += str(difficulty)
+        link += str(difficulty)
 
         if difficulty == 'easy':
             punten = 1
@@ -241,9 +245,9 @@ def play():
             punten = 3
 
         # laatste deel toevoegen '&type=multiple)'
-        url += str('&type=multiple')
-        print(url)
-        db.execute("UPDATE users SET url = :url WHERE id=:id", url= url, id=session["user_id"])
+        link += str('&type=multiple')
+        print(link)
+        db.execute("UPDATE users SET url = :url WHERE id=:id", url= link, id=session["user_id"])
 
         return render_template("game.html")
 
@@ -253,11 +257,13 @@ def play():
 
 
 @app.route("/game", methods=["GET", "POST"])
+@login_required
 def game():
     '''game'''
     # POST methode
     if request.method == "POST":
         keuzeantwoorden = []
+        url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
         # initialize, vraag i
         i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 10:
@@ -291,13 +297,16 @@ def game():
         keuzeantwoorden = []
         # initialize, vraag i
         i = 1
+        print(i)
+        url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
+
         #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 10:
             return render_template("endpage.html")
 
-        data = []
-        data.append("hoi")
-        vraag = "vraag 1"#data["results"][i]["question"]
+        data = question(url)
+        print(url)
+        vraag = data["results"][i]["question"]
         foutantwoorden = "fout"#data["results"][i]["incorrect_answers"]
         goedantwoord = "goed"#data["results"][i]["correct_answer"]
 
@@ -320,6 +329,7 @@ def game():
         return render_template("game.html", question = vraag, option_one = "dit is optie 1", option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
 
 @app.route("/index", methods=["GET","POST"])
+@login_required
 def indexroute():
 
     return render_template("index.html")
