@@ -171,7 +171,7 @@ def country():
 @login_required
 def ranking():
     '''Ranking'''
-#    # POST methode
+    # POST methode
 #    if request.method == "POST":
 
 #        def wereldranking():
@@ -220,7 +220,7 @@ def play():
     # POST methode
     if request.method == "POST":
 
-        score = 0
+        db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = 0)
 
         # voorbeeld URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
         link = str('https://opentdb.com/api.php?amount=1&category=')
@@ -262,20 +262,30 @@ def game():
     '''game'''
     # POST methode
     if request.method == "POST":
-                # of antwoord goed is
-        #if TODO = goedantwoord:
-        #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
-        #    score += punten
-        #    return GOED
-        #else:
 
-        #    return FOUT
+        streak = db.execute("SELECT streak FROM users WHERE id=:id",id=session["user_id"])
+        streak = streak[0]['streak']
 
+        # goede antwoordpositie eruit halen
+        goedantwoord = db.execute("SELECT correct FROM users WHERE id=:id",id=session["user_id"])
+        goedantwoord = goedantwoord[0]['correct']
 
-        return template("game.html")
+        # of antwoord goed is
+        if request.form.get("option") == goedantwoord:
+            streak += 1
+            db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak)
+            print("goed")
+
+        # score += punten
+        else:
+            print("fout")
+
+        return redirect(url_for("game"))
+
     else:
         # GET methode
         keuzeantwoorden = []
+
         # initialize, vraag i
         i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         i = i[0]['qnumber']
@@ -283,13 +293,15 @@ def game():
 
         #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 9:
-            return render_template("endpage.html")
+            i = 0
+            db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
+            return redirect(url_for("end"))
         data = question(url[0]["url"])
 
         vraag = data["results"][0]["question"]
         foutantwoorden = data["results"][0]["incorrect_answers"]
         goedantwoord = data["results"][0]["correct_answer"]
-        db.execute("UPDATE users SET correct = :correct WHERE id = :id", correct = goedantwoord, id=session["user_id"])
+
         # antwoorden shufflen, keuzeantwoorden is een lijst
         keuzeantwoorden.append(foutantwoorden[0])
         keuzeantwoorden.append(foutantwoorden[1])
@@ -297,13 +309,33 @@ def game():
         keuzeantwoorden.append(goedantwoord)
         random.shuffle(keuzeantwoorden)
 
+        # goede positie in de lijst als antwoord
+        goedpositie = [i for i,x in enumerate(keuzeantwoorden) if x == goedantwoord]
+        db.execute("UPDATE users SET correct = :correct WHERE id = :id", correct = goedpositie, id=session["user_id"])
 
+        # update qnumber
         i += 1
         db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
+
         return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
 
 @app.route("/index", methods=["GET","POST"])
 @login_required
 def indexroute():
-
     return render_template("index.html")
+
+@app.route("/endpage", methods=["GET","POST"])
+@login_required
+def end():
+
+    if request.method == "POST":
+        return render_template("endpage.html")
+
+    else:
+        streak = db.execute("SELECT streak FROM users WHERE id=:id",id=session["user_id"])
+        streak = streak[0]['streak']
+        score = db.execute("SELECT score FROM users WHERE id=:id", id=session["user_id"])
+        score = score[0]["score"]
+        score += streak
+        db.execute("UPDATE users SET score = :score WHERE id =:id", id=session["user_id"], score = score)
+        return render_template("endpage.html", streak=streak)
