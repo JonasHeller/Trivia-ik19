@@ -1,16 +1,36 @@
 body{
-    font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Roboto", "Avenir";
+    font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Graphik", "Roboto", "Avenir";
     font-size: 14px;
     color: #333333;
-    background-image: url("img/background.png");
+    background-image: url_for('img', filename='wall.png');
     background-repeat: no-repeat;
     background-size: cover;
     margin: auto;
     text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
+<<<<<<< HEAD
 form{
     border: 0px;
+=======
+#sorry img{
+    width: 50%;
+    height: auto;
+    margin: auto;
+}
+
+#much{
+    width: 50%;
+    height: auto;
+    text-align: center;
+    margin: auto;
+}
+
+#much img{
+    width: 50%;
+    height: auto;
+    margin: auto;
+>>>>>>> f242327d4e6f4a97dad80bbe7f5b96320c699919
 }
 
 #logo{
@@ -20,6 +40,15 @@ form{
     margin-top: 15px;
     margin-left: 10%;
     text-align: center;
+    letter-spacing: 4px;
+}
+
+#logo a{
+    color: white;
+}
+
+#logo a:hover{
+    color: #D0011B;
 }
 
 #logoY{
@@ -61,7 +90,8 @@ form{
     width: auto;
     height: 45px;
     background-color: white;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.20);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.10);
+    border-top: 3px solid #D0011B;
 }
 
 #navbar ul{
@@ -74,24 +104,28 @@ form{
 #navbar li{
     display: inline-block;
     width: auto;
-    margin-left: 5px;
-    margin-right: 20px;
-    height: 27px;
-    padding-top: 16px;
+    margin-right: 5px;
+    margin-top: 9px;
+    height: 22px;
+    border-radius: 3px;
+    padding-top: 5px;
+    padding-left: 16px;
+    padding-right: 16px;
     position: relative;
 }
 
 li a{
     text-decoration: none;
-    color: #333333;
+    color: #D0011B;
+    text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-#blue{
-    border-bottom: 3px solid #009DDC;
+#red{
+    background-color: #D0011B;
 }
 
-#blue a{
-    color: #009DDC;
+#red a{
+    color: white;
 }
 
 #title{
@@ -133,7 +167,7 @@ li a{
     height: 30px;
     font-size: 16px;
     text-align: center;
-    background-color: #009DDC;
+    background-color: #D0011B;
     color: white;
     border: 0px;
     display: block;
@@ -146,15 +180,15 @@ li a{
 }
 
 #submit, #submit2{
-    width: 90px;
+    width: 110px;
     height: 40px;
-    background-color: #009DDC;
+    background-color: #D0011B;
     border: 0px;
-    border-radius: 5px;
+    border-radius: 3px;
     display: block;
     margin: auto;
     margin-top: 50px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.10);
     color: white;
     font-size: 14px;
 }
@@ -163,7 +197,7 @@ li a{
     color: white;
     background-color: black;
     cursor: pointer;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 #submit2{
