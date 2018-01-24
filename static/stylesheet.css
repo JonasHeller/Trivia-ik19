@@ -27,7 +27,18 @@ body{
     text-align: center;
     border-bottom: 3px solid black;
 }
+#logout{
+    position: absolute;
+    right: 10%;
+    width: 100px;
+    height: 27px;
+    margin-top: 15px;
+}
 
+#logout a{
+    text-decoration: none;
+    color: #E03A3E;
+}
 #logo a{
     text-decoration: none;
     color: black;
