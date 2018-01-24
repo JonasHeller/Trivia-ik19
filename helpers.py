@@ -10,7 +10,7 @@ from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 
-def apology(message, code=400):
+def apology(message, code="Tries to have fun on the internet"):
     """Renders message as an apology to user."""
     def escape(s):
         """
@@ -22,7 +22,7 @@ def apology(message, code=400):
                          ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
             s = s.replace(old, new)
         return s
-    return render_template("apology.html", top=code, bottom=escape(message)), code
+    return render_template("apology.html", top=code, bottom=escape(message))
 
 def login_required(f):
     """

@@ -39,18 +39,18 @@ def index():
     if request.method == "POST":
         if request.form.get('submit') == "login":
             if not request.form.get("username"):
-                return apology("must provide username")
+                return apology("Doesn't input a username")
 
             # ensure password was submitted
             elif not request.form.get("password"):
-                return apology("must provide password")
+                return apology("Doesn't input a password")
 
             # query database for username
             rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
 
             # ensure username exists and password is correct
             if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-                return apology("invalid username and/or password")
+                return apology("Makes an error code 400 appear")
 
             # remember which user has logged in
             session["user_id"] = rows[0]["id"]
@@ -60,26 +60,26 @@ def index():
         elif request.form.get("submit") == "register":
             # Als username, password of repeat password mist
             if request.form["username"] == "":
-                return apology("Missing username!")
+                return apology("Forgets to input username")
             elif request.form["password"] == "":
-                return apology("Missing password!")
+                return apology("Forgets to input password")
             elif request.form["passwordagain"] == "":
-                return apology("Missing repeat password!")
+                return apology("Forgets to input password again")
             elif request.form["country"] == "":
-                return apology("Missing country!")
+                return apology("Forgets to input country")
 
              # Spelling gelijk maken voor alle landen, kleine letters
             country = request.form["country"]
 
             # Controle of het wachtwoord overeenkomt
             if request.form.get("passwordagain") != request.form.get("password"):
-                return apology("Password and repeated password are not equal")
+                return apology("Doesn't match his passwords")
 
 
             namen = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")), country = request.form.get("country"))
             print (namen)
             if not namen:
-                return apology("Username taken!")
+                return apology("Picks a username thats already taken")
 
             session['user_id'] = namen
 
@@ -108,20 +108,20 @@ def password():
 
         # missing information
         if not request.form.get("old_password"):
-            return apology("must enter old password")
+            return apology("Doesn't enter his old password")
         elif not request.form.get("new_password"):
-            return apology("must enter new password")
+            return apology("Doesn't enter his new password")
         elif not request.form.get("confirmation"):
-            return apology("must enter new password again")
+            return apology("Doesn't enter his new password again")
 
         # confirming the password and password again
         if request.form.get("confirmation") != request.form.get("new"):
-            return apology("passwords did not match")
+            return apology("Doesn't match his passwords")
 
         # confirming if the old password is correct
         hashes = db.execute("SELECT hash FROM users WHERE id = :id", id=session['user_id'])
         if not pwd_context.verify(request.form.get("old_password"), hashes[0]["hash"]):
-            return apology("old password is wrong")
+            return apology("Inputs wrong password")
 
         # updating the users table's hash
         db.execute("UPDATE users SET hash = :hash WHERE id=:id", hash=pwd_context.hash(request.form.get("new_password")), id=session["user_id"])
@@ -142,20 +142,20 @@ def country():
 
         # missing information
         if not request.form.get("old_country"):
-            return apology("must enter old country")
+            return apology("Forgets to input his old country")
         elif not request.form.get("new_country"):
-            return apology("must enter new country")
+            return apology("Forgets to input his new country")
         elif not request.form.get("confirmation"):
-            return apology("must enter new country again")
+            return apology("Forgets to input his new country twice")
 
         # confirming the country and country again
         if request.form.get("confirmation") != request.form.get("new_country"):
-            return apology("countries did not match")
+            return apology("Doesn't match his countries")
 
         # confirming if the old country is correct
         country = db.execute("SELECT country FROM users WHERE id = :id", id=session['user_id'])
         if request.form.get("old_country") != country:
-            return apology("old country is wrong")
+            return apology("Doesn't remember which country he lives in")
 
         # updating the users table's country
         db.execute("UPDATE users SET country = :country WHERE id=:id", country=request.form.get("new_country"), id=session["user_id"])
@@ -262,25 +262,20 @@ def game():
     '''game'''
     # POST methode
     if request.method == "POST":
+                # of antwoord goed is
+        #if TODO = goedantwoord:
+        #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
+        #    score += punten
+        #    return GOED
+        #else:
 
-        # goede antwoordpositie eruit halen
-        goedantwoord = db.execute("SELECT correct FROM users WHERE id=:id",id=session["user_id"])
-        goedantwoord = goedantwoord[0]['correct']
+        #    return FOUT
 
-        # of antwoord goed is
-        if request.form.get("option") == goedantwoord:
-            print("goed")
 
-        # score += punten
-        else:
-            print("fout")
-
-        return redirect(url_for("game"))
-
+        return template("game.html")
     else:
         # GET methode
         keuzeantwoorden = []
-
         # initialize, vraag i
         i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         i = i[0]['qnumber']
@@ -288,15 +283,13 @@ def game():
 
         #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 9:
-            i = 0
-            db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
             return render_template("endpage.html")
         data = question(url[0]["url"])
 
         vraag = data["results"][0]["question"]
         foutantwoorden = data["results"][0]["incorrect_answers"]
         goedantwoord = data["results"][0]["correct_answer"]
-
+        db.execute("UPDATE users SET correct = :correct WHERE id = :id", correct = goedantwoord, id=session["user_id"])
         # antwoorden shufflen, keuzeantwoorden is een lijst
         keuzeantwoorden.append(foutantwoorden[0])
         keuzeantwoorden.append(foutantwoorden[1])
@@ -304,14 +297,9 @@ def game():
         keuzeantwoorden.append(goedantwoord)
         random.shuffle(keuzeantwoorden)
 
-        # goede positie in de lijst als antwoord
-        goedpositie = [i for i,x in enumerate(keuzeantwoorden) if x == goedantwoord]
-        db.execute("UPDATE users SET correct = :correct WHERE id = :id", correct = goedpositie, id=session["user_id"])
 
-        # update qnumber
         i += 1
         db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
-
         return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
 
 @app.route("/index", methods=["GET","POST"])
