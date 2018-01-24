@@ -1,7 +1,7 @@
 import urllib
 import json
 import urllib.request
-
+import random
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -249,7 +249,7 @@ def play():
         print(link)
         db.execute("UPDATE users SET url = :url WHERE id=:id", url= link, id=session["user_id"])
 
-        return render_template("game.html")
+        return redirect(url_for("game"))
 
     else:
         # GET methode
@@ -296,27 +296,25 @@ def game():
         # GET methode
         keuzeantwoorden = []
         # initialize, vraag i
-        i = 1
+        i = 0
         print(i)
         url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
 
         #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 10:
             return render_template("endpage.html")
+        data = question(url[0]["url"])
 
-        data = question(url)
-        print(url)
-        vraag = data["results"][i]["question"]
-        foutantwoorden = "fout"#data["results"][i]["incorrect_answers"]
-        goedantwoord = "goed"#data["results"][i]["correct_answer"]
+        vraag = data["results"][0]["question"]
+        foutantwoorden = data["results"][i]["incorrect_answers"]
+        goedantwoord = data["results"][i]["correct_answer"]
 
         # antwoorden shufflen, keuzeantwoorden is een lijst
-        keuzeantwoorden.append(foutantwoorden)
+        keuzeantwoorden.append(foutantwoorden[0])
+        keuzeantwoorden.append(foutantwoorden[1])
+        keuzeantwoorden.append(foutantwoorden[2])
         keuzeantwoorden.append(goedantwoord)
-        keuzeantwoorden.append(goedantwoord)
-        keuzeantwoorden.append(goedantwoord)
-        #keuzeantwoorden = random.shuffle(keuzeantwoorden)
-        print(data)
+        keuzeantwoorden = random.shuffle(keuzeantwoorden)
         # of antwoord goed is
         #if TODO = goedantwoord:
         #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
@@ -326,7 +324,7 @@ def game():
         #    return FOUT
         i += 1
         #db.execute("UPDATE qnumber FROM users WHERE id=:id",id=session["user_id"], qnumber=i)
-        return render_template("game.html", question = vraag, option_one = "dit is optie 1", option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
+        return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
 
 @app.route("/index", methods=["GET","POST"])
 @login_required
