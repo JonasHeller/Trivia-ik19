@@ -23,7 +23,7 @@
 #field{
     width: 200px;
     height: 38px;
-    color: white;
+    color: rgba(255, 255, 255, 0.7);
     background-color: #009DDC;
     font-size: 15px;
     border-radius: 5px;
