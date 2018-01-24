@@ -219,7 +219,7 @@ def play():
         score = 0
 
         # voorbeeld URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
-        url = str('https://opentdb.com/api.php?amount=10&category=')
+        url = str('https://opentdb.com/api.php?amount=1&category=')
 
         # categorie nummer maken
         category = request.form["category"]
@@ -242,12 +242,10 @@ def play():
 
         # laatste deel toevoegen '&type=multiple)'
         url += str('&type=multiple')
+        print(url)
+        db.execute("UPDATE users SET url = :url WHERE id=:id", url= url, id=session["user_id"])
 
-        # de vragen opvragen uit de API
-        json_obj = urllib.request.urlopen(url).read()
-        response = urllib.request.urlopen(url).read()
-        json_obj = str(response, 'utf-8')
-        data = json.loads(json_obj)
+        return render_template("game.html")
 
     else:
         # GET methode
@@ -261,15 +259,20 @@ def game():
     if request.method == "POST":
         keuzeantwoorden = []
         # initialize, vraag i
+        i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
+        if i == 10:
+            return render_template("endpage.html")
+
         vraag = data["results"][i]["question"]
         foutantwoorden = data["results"][i]["incorrect_answers"]
         goedantwoord = data["results"][i]["correct_answer"]
-
+        data = []
+        data.append("hoi")
         # antwoorden shufflen, keuzeantwoorden is een lijst
         keuzeantwoorden.append(foutantwoorden)
         keuzeantwoorden.append(goedantwoord)
         keuzeantwoorden = random.shuffle(keuzeantwoorden)
-        print(keuzeantwoorden)
+        print(data)
         # of antwoord goed is
         #if TODO = goedantwoord:
         #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
@@ -277,9 +280,46 @@ def game():
         #    return GOED
         #else:
         #    return FOUT
+        i += 1
+        db.execute("UPDATE qnumber FROM users WHERE id=:id",id=session["user_id"], qnumber=i)
 
 
-        return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
+        return render_template("game.html", question = vraag, option_one = "dit is optie 1", option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
+
     else:
         # GET methode
-        return render_template("game.html")
+        keuzeantwoorden = []
+        # initialize, vraag i
+        i = 1
+        #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
+        if i == 10:
+            return render_template("endpage.html")
+
+        data = []
+        data.append("hoi")
+        vraag = "vraag 1"#data["results"][i]["question"]
+        foutantwoorden = "fout"#data["results"][i]["incorrect_answers"]
+        goedantwoord = "goed"#data["results"][i]["correct_answer"]
+
+        # antwoorden shufflen, keuzeantwoorden is een lijst
+        keuzeantwoorden.append(foutantwoorden)
+        keuzeantwoorden.append(goedantwoord)
+        keuzeantwoorden.append(goedantwoord)
+        keuzeantwoorden.append(goedantwoord)
+        #keuzeantwoorden = random.shuffle(keuzeantwoorden)
+        print(data)
+        # of antwoord goed is
+        #if TODO = goedantwoord:
+        #    TODO # WILLEN TOTALE PUNTEN SCORE UPDATEN OF SCOREN VAN VRAGEN ALLEEN?
+        #    score += punten
+        #    return GOED
+        #else:
+        #    return FOUT
+        i += 1
+        #db.execute("UPDATE qnumber FROM users WHERE id=:id",id=session["user_id"], qnumber=i)
+        return render_template("game.html", question = vraag, option_one = "dit is optie 1", option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
+
+@app.route("/index", methods=["GET","POST"])
+def indexroute():
+
+    return render_template("index.html")
