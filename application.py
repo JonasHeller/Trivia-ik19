@@ -89,15 +89,16 @@ def index():
         return render_template("indexnot.html")
 
 
-@app.route("/logout")
-def logout():
+@app.route("/indexnot")
+def indexnot():
     """Log user out."""
 
     # forget any user_id
     session.clear()
 
-    # redirect user to login form
-    return redirect(url_for("login"))
+    if request.method == "GET":
+        # redirect user to login form
+        return redirect(url_for("/"))
 
 @app.route("/password", methods=["GET", "POST"])
 @login_required
@@ -170,46 +171,7 @@ def country():
 @app.route("/rankings", methods=["GET", "POST"])
 @login_required
 def ranking():
-    '''Ranking'''
-    # POST methode
-#    if request.method == "POST":
 
-#        def wereldranking():
-#            db.execute("SELECT * FROM users ORDER BY DESC;
-#
-#                        WITH  Result AS
-#                        (
-#                        SELECT points,
-#                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
-#                        FROM users
-#                        )
-#                        SELECT TOP 10 points FROM Result")
-#
-#        def eigenranking():
-#            id = session["user_id"]
-#            db.execute("SELECT * FROM users ORDER BY DESC;
-
-#                        WITH  Result AS
-#                        (
-#                        SELECT points,
-#                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
-#                        FROM users
-#                        )
-#                        SELECT TOP 1 points FROM Result WHERE id=:id")
-
-#        def landranking():
-#            db.execute("SELECT * FROM users ORDER BY DESC;
-
-#                        WITH  Result AS
-#                        (
-#                        SELECT points,
-#                        DENSE_RANK() OVER (ORDER BY points DESC) AS Score_rank
-#                        FROM users
-#                        )
-#                        SELECT TOP 10 points FROM Result WHERE country=request.form.get("country")")
-#
-#    else:
-#        # GET methode
     return render_template("rankings.html")
 
 
@@ -243,7 +205,7 @@ def play():
             punten = 2
         else:
             punten = 3
-
+        db.execute("UPDATE users SET difficulty = :difficulty WHERE id=:id", difficulty = punten, id=session["user_id"])
         # laatste deel toevoegen '&type=multiple)'
         link += str('&type=multiple')
         print(link)
@@ -270,9 +232,11 @@ def game():
         goedantwoord = db.execute("SELECT correct FROM users WHERE id=:id",id=session["user_id"])
         goedantwoord = goedantwoord[0]['correct']
 
+        punten = db.execute("SELECT difficulty FROM users WHERE id=:id",id=session["user_id"])
+        punten = punten[0]['difficulty']
         # of antwoord goed is
         if request.form.get("option") == goedantwoord:
-            streak += 1
+            streak += (1 * punten)
             db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak)
             print("goed")
 

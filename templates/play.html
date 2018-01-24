@@ -9,7 +9,7 @@
             <div id="logo">
                 <a href="index">WhoopDeeDoo</a>
             </div>
-            <div id="logout"><a href="indexnot">logout</a>
+            <div id="logout"><a href="/">logout</a>
             </div>
             <ul>
                 <li id="blue"><a href="play">play</a></li>
@@ -21,9 +21,9 @@
         </div>
         <form action="{{ url_for('play') }}" method="post">
                 <select name = "difficulty" id="selects">
-                    <option value="easy">easy</option>
-                    <option value="medium" selected="selected">medium</option>
-                    <option value="hard">hard</option>
+                    <option value="easy">easy (worth 1 point)</option>
+                    <option value="medium" selected="selected">medium (worth 2 points)</option>
+                    <option value="hard">hard (worth 3 points)</option>
                 </select>
                 <select name="category" id="selects2">
                     <option value="0" selected="selected">all categories</option>
