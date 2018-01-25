@@ -9,6 +9,10 @@ body{
     text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
+<<<<<<< HEAD
+form{
+    border: 0px;
+=======
 #sorry img{
     width: 50%;
     height: auto;
@@ -26,6 +30,7 @@ body{
     width: 50%;
     height: auto;
     margin: auto;
+>>>>>>> f242327d4e6f4a97dad80bbe7f5b96320c699919
 }
 
 #logo{
