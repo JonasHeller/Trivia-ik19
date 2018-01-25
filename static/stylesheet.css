@@ -1,5 +1,5 @@
 body{
-    font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Graphik", "Roboto", "Avenir";
+    font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Graphik", "Roboto", "Helvetica", "Avenir", "Calibri";
     font-size: 14px;
     color: #333333;
     background-image: url_for('img', filename='wall.png');
@@ -9,10 +9,6 @@ body{
     text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-<<<<<<< HEAD
-form{
-    border: 0px;
-=======
 #sorry img{
     width: 50%;
     height: auto;
@@ -30,7 +26,6 @@ form{
     width: 50%;
     height: auto;
     margin: auto;
->>>>>>> f242327d4e6f4a97dad80bbe7f5b96320c699919
 }
 
 #logo{
@@ -130,7 +125,7 @@ li a{
 }
 
 #title{
-    width: 380px;
+    width: 450px;
     height: 50px;
     background-color: white;
     margin: auto;
@@ -192,6 +187,7 @@ li a{
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.10);
     color: white;
     font-size: 14px;
+    transition: all 2s ease;
 }
 
 #submit:hover, #submit2:hover{
