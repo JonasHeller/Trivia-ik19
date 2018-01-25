@@ -36,6 +36,8 @@ body{
     margin-left: 10%;
     text-align: center;
     letter-spacing: 4px;
+    text-transform: uppercase;
+    transition: all 1s ease;
 }
 
 #logo a{
@@ -53,7 +55,6 @@ body{
     margin-top: 15px;
     margin-left: 10%;
     text-align: center;
-    border-bottom: 3px solid black;
 }
 
 #logout{
