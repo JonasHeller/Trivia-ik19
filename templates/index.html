@@ -4,9 +4,8 @@
         <title>welcome</title>
     </head>
     <body>
-
         <div id="navbar">
-            <div id="logoY">
+            <div id="logoClicked">
                 <a href="index">WHOOPDEEDOO</a>
             </div>
             <div id="logout"><a href="/">logout</a>
@@ -20,19 +19,17 @@
             <div id="title">
                 <h1>What is WhoopDeeDoo?</h1>
             </div>
-
             <div id="text">
                 <p>
                     WhoopDeeDoo is a fun website for Trivia Quizes. You can collect
                     points and try to beat your friends at the game. Click rankings
-                    for a list of highest scores and click on your name to change
-                    your name/password or to log out. Press enter to start a game.
+                    for a list of highest scores and click on log out to leave. Press
+                    the "Let's Go!" button or hit enter to start a game.
                 </p>
             </div>
+            <form action="play" method="get">
+                <input id="submit" type="submit" value="let's go!"></input>
+            </form>
         </div>
-        <form action="play" method="get">
-            <input id="submit2" type="submit" value="let's go!"></input>
-        </form>
-
     </body>
 </html>

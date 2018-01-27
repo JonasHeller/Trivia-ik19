@@ -2,28 +2,20 @@
     <head>
         <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
         <link href="{{ url_for('static', filename='indexnot.css') }}" rel="stylesheet"/>
-        <title>welcome</title>
+        <title>Welcome</title>
     </head>
     <body>
         <div id="navbar">
-            <div id="logoY">
-                <a href="/">WHOOPDEEDOO</a>
-            </div>
-        </div>
-        <div id="title">
-            <h1>register & login</h1>
-        </div>
-
-        <div id="all">
+            <h2>WHOOPDEEDOO</h2></div>
+        <div id="redbar">
             <!-- register -->
             <div id="container">
-            <form action="{{ url_for('index') }}" method="post">
-                <fieldset>
+                <form action="{{ url_for('index') }}" method="post">
                     <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
                     <input id="field" name="password" placeholder="Password" type="password"/>
                     <input id="field" name="passwordagain" placeholder="Type password again" type="password"/>
                     <div id="select">
-                        <select name = "country" id="selects">
+                        <select name="country" id="selects">
                             <option value="AF">Afghanistan</option>
                             <option value="AX">Åland Islands</option>
                             <option value="AL">Albania</option>
@@ -276,18 +268,15 @@
                         </select>
                     </div>
                     <button id="submit" type="submit" name="submit" value="register">Register</button>
-                </fieldset>
-            </form>
+                </form>
             </div>
 
             <!-- login -->
             <div id="container">
-            <form action="{{ url_for('index') }}" method="post">
-                <fieldset>
-                    <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-                    <input id="field" name="password" placeholder="Password" type="password"/>
-                    <button id="submit" type="submit" name="submit" value="login">login</button>
-                </fieldset>
+            <form action="{{ url_for('index') }}" method="post"></form>
+                <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                <input id="field" name="password" placeholder="Password" type="password"/>
+                <button id="submit" type="submit" name="submit" value="login">login</button>
             </form>
             </div>
             </div>
