@@ -16,16 +16,15 @@
         <div id="question">
             <p>{{question}}</p>
         </div>
+        <div id="where">Question COUNT of TOTAL</div>
         <form action="{{ url_for('game') }}" method="post">
             <div name="answer" id="options">
-                <input type="radio" name="option" value="0">{{option_one}}</input><br>
-                <input type="radio" name="option" value="1">{{option_two}}</input><br>
-                <input type="radio" name="option" value="2">{{option_three}}</input><br>
-                <input type="radio" name="option" value="3">{{option_four}}</input><br>
-                <div>
-                    <button id="submit" type="submit" name="submit" value="next">Next question</button>
-                </div>
+                <div id="label">1</div><input type="radio" accesskey="1" name="option" value="0"><p>{{option_one}}</p></input><br>
+                <div id="label">2</div><input type="radio" accesskey="2" name="option" value="1"><p>{{option_two}}</p></input><br>
+                <div id="label">3</div><input type="radio" accesskey="3" name="option" value="2"><p>{{option_three}}</p></input><br>
+                <div id="label">4</div><input type="radio" accesskey="4" name="option" value="3"><p>{{option_four}}</p></input><br>
             </div>
+            <button id="submit" type="submit" name="submit" value="next">next question</button>
         </form>
         </div>
     </body>
