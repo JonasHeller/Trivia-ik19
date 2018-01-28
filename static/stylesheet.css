@@ -2,7 +2,7 @@ body{
     font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Graphik", "Roboto", "Helvetica", "Avenir", "Calibri";
     font-size: 14px;
     color: #333333;
-    background-image: url_for('img', filename='wall.png');
+    background-image: url("../static/img/wall.png");
     background-repeat: no-repeat;
     background-size: cover;
     margin: auto;
