@@ -1,23 +1,28 @@
 #points{
     width: 470px;
     height: 26px;
-    background-color: white;
+    color: white;
     text-align: center;
     padding-top: 10px;
+    margin-top: 50px;
+    margin-bottom: 20px;
     margin-left: calc(50% - 235px);
 }
 
 #big{
     width: 400px;
-    height: 450px;
+    height: 220px;
     margin-left: calc(50% - 200px);
     margin-top: 50px;
     overflow: scroll;
+    background-color: grey;
 }
 
 #first{
     width: 400px;
     height: 45px;
+    background-color: purple;
+    color: #333;
 }
 
 #count{
@@ -27,7 +32,9 @@
     text-align: center;
     display: inline-block;
     padding-top: 8px;
-    margin-top: 5px;
+    float: left;
+    margin-top: 2px;
+    color: #333;
 }
 
 #name{
@@ -37,6 +44,7 @@
     text-align: center;
     display: inline-block;
     padding-top: 8px;
+    color: #333;
     margin-left: 28px;
 }
 
@@ -48,10 +56,16 @@
     display: inline-block;
     padding-top: 8px;
     margin-left: 25px;
+    color: #333;
 }
 
-#select select{
-    margin-bottom: 50px;
-    margin-top: 0px;
+select{
+    margin-top: 20px;
     margin-left: calc(50% - 110px);
+    display: inline-block;
+}
+
+#submit{
+    display: inline-block;
+    margin-top: 0px;
 }
