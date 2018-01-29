@@ -171,21 +171,59 @@ def country():
 @app.route("/rankings", methods=["GET", "POST"])
 @login_required
 def ranking():
-    dic = []
-    info = db.execute("SELECT * FROM users")
-    users = db.execute("SELECT username FROM users")
-    user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
+    '''Ranking'''
+    # POST methode
+    if request.method == "POST":
+        landkeuze = request.form.get("country")
+        print(landkeuze)
+        dataland = db.execute("SELECT * FROM users WHERE country =:country", country = landkeuze)
+        print(dataland)
+        lijstland = []
 
-    for i in range(len(users)):
-        username = info[i]['username']
-        score = info[i]["score"]
-        dic.append(username)
-        dic.append(score)
+        # persoonlijke score
+        user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
+        pscore = user[0]["score"]
 
+        # wereldranking
+        for i in range(len(dataland)):
+            mini = ()
+            username = dataland[i]["username"]
+            score = dataland[i]["score"]
+            mini = ((score, username))
+            lijstland.append(mini)
 
-    return render_template("rankings.html", userpoints = user[0]['score'], user1 = dic[0], score1 = dic[1],user2 = dic[2],user3 = dic[4],user4 = dic[6],user5 = dic[8],user6 = dic[10],user7 = dic[12],user8 = dic[14],user9 = dic[16],user10 = dic[18],score2 = dic[3],score3 = dic[5],score4 = dic[7],score5 = dic[9],score6 = dic[11],score7 = dic[13],score8 = dic[15],score9 = dic[17],score10 = dic[19],)
+        while len(lijstland) < 10:
+            mini = ()
+            username = "None"
+            score = int(0)
+            mini = ((score, username))
+            lijstland.append(mini)
 
+        print(lijstland)
 
+        lijstland = sorted(lijstland, reverse=True)
+        return render_template("rankings.html", pscore = pscore, name1 = lijstland[0][1], score1 = lijstland[0][0], name2 = lijstland[1][1], score2 = lijstland[1][0], name3 = lijstland[2][1], score3 = lijstland[2][0], name4 = lijstland[3][1], score4 = lijstland[3][0], name5 = lijstland[4][1], score5 = lijstland[4][0], name6 = lijstland[5][1], score6 = lijstland[5][0], name7 = lijstland[6][1], score7 = lijstland[6][0], name8 = lijstland[7][1], score8 = lijstland[7][0], name9 = lijstland[8][1], score9 = lijstland[8][0], name10 = lijstland[9][1], score10 = lijstland[9][0])
+
+    else:
+        lijst = []
+        info = db.execute("SELECT * FROM users")
+
+        # persoonlijke score
+        user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
+        pscore = user[0]["score"]
+
+        # wereldranking
+        for i in range(len(info)):
+            mini= ()
+            username = info[i]["username"]
+            score = info[i]["score"]
+            mini = ((score, username))
+            lijst.append(mini)
+
+        lijst = sorted(lijst, reverse=True)
+
+            # GET methode
+        return render_template("rankings.html", pscore = pscore, name1 = lijst[0][1], score1 = lijst[0][0], name2 = lijst[1][1], score2 = lijst[1][0], name3 = lijst[2][1], score3 = lijst[2][0], name4 = lijst[3][1], score4 = lijst[3][0], name5 = lijst[4][1], score5 = lijst[4][0], name6 = lijst[5][1], score6 = lijst[5][0], name7 = lijst[6][1], score7 = lijst[6][0], name8 = lijst[7][1], score8 = lijst[7][0], name9 = lijst[8][1], score9 = lijst[8][0], name10 = lijst[9][1], score10 = lijst[9][0])
 @app.route("/play", methods=["GET", "POST"])
 @login_required
 def play():
@@ -272,6 +310,7 @@ def game():
         data = question(url[0]["url"])
 
         vraag = data["results"][0]["question"]
+
         foutantwoorden = data["results"][0]["incorrect_answers"]
         goedantwoord = data["results"][0]["correct_answer"]
 
@@ -288,9 +327,10 @@ def game():
 
         # update qnumber
         i += 1
+
         db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = i)
 
-        return render_template("game.html", question = vraag, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
+        return render_template("game.html", question = vraag, qnumber = i, option_one = keuzeantwoorden[0], option_two = keuzeantwoorden[1], option_three = keuzeantwoorden[2], option_four = keuzeantwoorden[3])
 
 @app.route("/index", methods=["GET","POST"])
 @login_required
