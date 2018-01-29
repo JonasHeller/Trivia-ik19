@@ -10,10 +10,51 @@
     cursor: default;
 }
 
-#container{
+#a{
+    display: inline-block;
+    float: left;
+    width: 300px;
+}
+
+#b{
+    display: inline-block;
+    float: right;
+    width: 300px;
+}
+
+#c{
+    width: 640px;
+    height: 40px;
+    font-size: 16px;
+    color: white;
+    position: absolute;
+    top: 50;
+    left: calc(50% - 322px);
+}
+
+#containerHalf{
+    opacity: 0.5;
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -ms-filter: blur(1px);
+    -o-filter: blur(1px);
+    filter: blur(1px);
+    transition: all 0.5s ease;
+}
+
+#containerHalf:hover{
+    opacity: 1;
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -ms-filter: blur(0px);
+    -o-filter: blur(0px);
+    filter: blur(0px);
+}
+
+#container, #containerHalf{
     width: 40%;
     max-width: 300px;
-    height: 700px;
+    height: 460px;
     display: inline-block;
     border: 0px;
     margin-top: 100px;
@@ -24,7 +65,8 @@
 #field{
     width: 200px;
     height: 32px;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(208, 2, 27, 0.6);
+    font-weight: 500;
     background-color: white;
     font-size: 15px;
     border-radius: 3px;

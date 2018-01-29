@@ -46,5 +46,10 @@
 }
 
 #submit{
-    margin-top: 20px;
+    margin-top: 2px;
+}
+
+#where{
+    color: white;
+    opacity: 0.5;
 }

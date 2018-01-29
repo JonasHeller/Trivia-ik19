@@ -7,6 +7,7 @@ body{
     background-size: cover;
     margin: auto;
     text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+    text-transform: lowercase;
 }
 
 #bar{
@@ -84,6 +85,7 @@ li a{
     letter-spacing: 4px;
     margin-left: 10%;
     text-align: center;
+    text-transform: uppercase;
 }
 
 #logo a{
@@ -234,7 +236,8 @@ li a{
     border-radius: 3px;
     display: block;
     margin: auto;
-    margin-top: 150px;
+    font-weight: 500;
+    margin-top: 149px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.10);
     color: #D0011B;
     font-size: 14px;
@@ -249,5 +252,5 @@ li a{
 }
 
 #submit2{
-    margin-top: 250px;
+    margin-top: 251px;
 }
