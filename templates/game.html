@@ -2,6 +2,7 @@
     <head>
          <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
         <link href="{{ url_for('static', filename='game.css') }}" rel="stylesheet"/>
+        <link href="{{ url_for('static', filename='script.js') }}" rel="javascript"/>
         <title>Game</title>
     </head>
     <body>
@@ -16,7 +17,7 @@
         <div id="question">
             <p>{{question}}</p>
         </div>
-        <div id="where">Question COUNT of TOTAL</div>
+        <div id="where">COUNT OF 10</div>
         <form action="{{ url_for('game') }}" method="post">
             <div name="answer" id="options">
                 <div id="label">1</div><input type="radio" accesskey="1" name="option" value="0"><p>{{option_one}}</p></input><br>
@@ -24,7 +25,7 @@
                 <div id="label">3</div><input type="radio" accesskey="3" name="option" value="2"><p>{{option_three}}</p></input><br>
                 <div id="label">4</div><input type="radio" accesskey="4" name="option" value="3"><p>{{option_four}}</p></input><br>
             </div>
-            <button id="submit" type="submit" name="submit" value="next">next question</button>
+            <button id="submit" type="submit" name="submit" value="next" onkeypress="checkDo()">next question</button>
         </form>
         </div>
     </body>

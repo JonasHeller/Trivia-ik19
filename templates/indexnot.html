@@ -8,12 +8,16 @@
         <div id="navbar">
             <h2>WHOOPDEEDOO</h2></div>
         <div id="redbar">
+            <div id="c">
+                <div id="a">register</div>
+                <div id="b">login</div>
+            </div>
             <!-- register -->
-            <div id="container">
+            <div id="containerHalf">
                 <form action="{{ url_for('index') }}" method="post">
-                    <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-                    <input id="field" name="password" placeholder="Password" type="password"/>
-                    <input id="field" name="passwordagain" placeholder="Type password again" type="password"/>
+                    <input id="field" autocomplete="off" name="username" placeholder="username" type="text"/>
+                    <input id="field" name="password" placeholder="password" type="password"/>
+                    <input id="field" name="passwordagain" placeholder="type password again" type="password"/>
                     <div id="select">
                         <select name="country" id="selects">
                             <option value="AF">Afghanistan</option>
@@ -267,15 +271,15 @@
                             <option value="ZW">Zimbabwe</option>
                         </select>
                     </div>
-                    <button id="submit" type="submit" name="submit" value="register">Register</button>
+                    <button id="submit" type="submit" name="submit" value="register">register</button>
                 </form>
             </div>
 
             <!-- login -->
             <div id="container">
-            <form action="{{ url_for('index') }}" method="post"></form>
-                <input id="field" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-                <input id="field" name="password" placeholder="Password" type="password"/>
+            <form action="{{ url_for('index') }}" method="post">
+                <input id="field" autocomplete="off" name="username" placeholder="username" type="text" autofocus/>
+                <input id="field" name="password" placeholder="password" type="password"/>
                 <button id="submit" type="submit" name="submit" value="login">login</button>
             </form>
             </div>
