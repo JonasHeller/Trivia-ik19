@@ -17,7 +17,7 @@
         <div id="question">
             <p>{{question}}</p>
         </div>
-        <div id="where">COUNT OF 10</div>
+        <div id="where">{{qnumber}} OF 10</div>
         <form action="{{ url_for('game') }}" method="post">
             <div name="answer" id="options">
                 <div id="label">1</div><input type="radio" accesskey="1" name="option" value="0"><p>{{option_one}}</p></input><br>
