@@ -2,6 +2,7 @@ import urllib
 import json
 import urllib.request
 import random
+import html
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -310,14 +311,18 @@ def game():
         data = question(url[0]["url"])
 
         vraag = data["results"][0]["question"]
-
+        vraag = html.unescape(vraag)
         foutantwoorden = data["results"][0]["incorrect_answers"]
         goedantwoord = data["results"][0]["correct_answer"]
+        goedantwoord = html.unescape(goedantwoord)
+        fout1 = html.unescape(foutantwoorden[0])
+        fout2 = html.unescape(foutantwoorden[1])
+        fout3 = html.unescape(foutantwoorden[2])
 
         # antwoorden shufflen, keuzeantwoorden is een lijst
-        keuzeantwoorden.append(foutantwoorden[0])
-        keuzeantwoorden.append(foutantwoorden[1])
-        keuzeantwoorden.append(foutantwoorden[2])
+        keuzeantwoorden.append(fout1)
+        keuzeantwoorden.append(fout2)
+        keuzeantwoorden.append(fout3)
         keuzeantwoorden.append(goedantwoord)
         random.shuffle(keuzeantwoorden)
 
