@@ -15,12 +15,9 @@
                 <li id="red"><a href="rankings">rankings</a></li>
             </ul>
         </div>
-        <div id="title"><h1>rankings</h2>
-        <div id="{{points}}">you have {{userpoints}} points and your rank is {{userrank}}</div>
-        <br>
-        <br>
-        <br>
-        <div id="select">
+        <div id="redbar">
+        <div id="points">you have {{pscore}} points and your rank is {{rank}}</div>
+        <div>
             <select id="selects">
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
@@ -272,11 +269,9 @@
                 <option value="ZM">Zambia</option>
                 <option value="ZW">Zimbabwe</option>
             </select>
+            <button id="submit" type="submit" name="submit" value="next">select</button>
         </div>
-
-
         <div id="big">
-
             <div id="first">
                 <div id="count">1</div>
                 <div id="name">{{user1}}</div>
@@ -328,6 +323,6 @@
                 <div id="punten">{{points10}}</div>
             </div>
         </div>
-
+    </div>
     </body>
 </html>
