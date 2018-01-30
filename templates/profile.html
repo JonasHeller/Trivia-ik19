@@ -1,8 +1,8 @@
 <html>
     <head>
         <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
-        <link href="{{ url_for('static', filename='rankings.css') }}" rel="stylesheet"/>
-        <title>rankings</title>
+        <link href="{{ url_for('static', filename='script.js') }}" rel="javascript"/>
+        <title>welcome</title>
     </head>
     <body>
         <div id="navbar">
@@ -12,12 +12,11 @@
             <div id="profile"><a href="profile">profile</a></div>
             <ul>
                 <li><a href="play">play</a></li>
-                <li id="blue"><a href="rankings">rankings</a></li>
+                <li><a href="rankings">rankings</a></li>
             </ul>
         </div>
         <div id="redbar">
-            <div id="title"><h2>well done!</h2></div>
-            <div id="points">you have added {{pscore}} points</div>
+
         </div>
     </body>
 </html>

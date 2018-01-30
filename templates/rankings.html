@@ -9,7 +9,7 @@
             <div id="logo">
                 <a href="index">WHOOPDEEDOO</a>
             </div>
-            <div id="logout"><a href="/">logout</a></div>
+            <div id="profile"><a href="profile">profile</a></div>
             <ul>
                 <li><a href="play">play</a></li>
                 <li id="red"><a href="rankings">rankings</a></li>
@@ -18,7 +18,9 @@
         <div id="redbar">
         <div id="points">you have {{pscore}} points!</div>
         <div>
-            <select id="selects">
+            <form>
+            <select id="selects" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                <option value="">Choose Country</option>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
                 <option value="AL">Albania</option>
@@ -175,7 +177,7 @@
                 <option value="NA">Namibia</option>
                 <option value="NR">Nauru</option>
                 <option value="NP">Nepal</option>
-                <option selected ="selected" value="NL">Netherlands</option>
+                <option value="NL">Netherlands</option>
                 <option value="NC">New Caledonia</option>
                 <option value="NZ">New Zealand</option>
                 <option value="NI">Nicaragua</option>
@@ -269,9 +271,14 @@
                 <option value="ZM">Zambia</option>
                 <option value="ZW">Zimbabwe</option>
             </select>
-            <button id="submit" type="submit" name="submit" value="next">select</button>
+            </form>
         </div>
         <div id="big">
+            <div id="head">
+                <div id="count">PLACE</div>
+                <div id="name">NAME</div>
+                <div id="punten">POINTS</div>
+            </div>
             <div id="first">
                 <div id="count">1</div>
                 <div id="name">{{name1}}</div>
