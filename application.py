@@ -51,7 +51,7 @@ def index():
 
             # ensure username exists and password is correct
             if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-                return apology("Makes an error code 400 appear")
+                return apology("Inputs wrong account login")
 
             # remember which user has logged in
             session["user_id"] = rows[0]["id"]
@@ -59,7 +59,7 @@ def index():
             # redirect user to home page
             return render_template("index.html")
         elif request.form.get("submit") == "register":
-            # Als username, password of repeat password mist
+            # is username, country, password or repeat password are missing
             if request.form["username"] == "":
                 return apology("Forgets to input username")
             elif request.form["password"] == "":
@@ -69,21 +69,18 @@ def index():
             elif request.form["country"] == "":
                 return apology("Forgets to input country")
 
-             # Spelling gelijk maken voor alle landen, kleine letters
             country = request.form["country"]
 
-            # Controle of het wachtwoord overeenkomt
+            # Checks if passwords are the same
             if request.form.get("passwordagain") != request.form.get("password"):
                 return apology("Doesn't match his passwords")
 
 
             namen = db.execute("INSERT INTO users (username, hash, country) VALUES(:username, :hash, :country)", username=request.form.get("username"), hash = pwd_context.hash(request.form.get("password")), country = request.form.get("country"))
-            print (namen)
             if not namen:
                 return apology("Picks a username thats already taken")
-
+            #remember wich user just registerd
             session['user_id'] = namen
-
             return render_template("index.html")
 
     else:
@@ -108,7 +105,7 @@ def password():
     # POST methode
     if request.method == "POST":
 
-        # missing information
+        # if there is missing information
         if not request.form.get("old_password"):
             return apology("Doesn't enter his old password")
         elif not request.form.get("new_password"):
@@ -116,7 +113,7 @@ def password():
         elif not request.form.get("confirmation"):
             return apology("Doesn't enter his new password again")
 
-        # confirming the password and password again
+        # make sure passwords are the same
         if request.form.get("confirmation") != request.form.get("new"):
             return apology("Doesn't match his passwords")
 
@@ -175,33 +172,30 @@ def ranking():
     '''Ranking'''
     # POST methode
     if request.method == "POST":
+        #selects wich country the user want to see
         landkeuze = request.form.get("country")
-        print(landkeuze)
         dataland = db.execute("SELECT * FROM users WHERE country =:country", country = landkeuze)
-        print(dataland)
         lijstland = []
 
-        # persoonlijke score
+        # personal score
         user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
         pscore = user[0]["score"]
 
-        # wereldranking
+        # worldranking
         for i in range(len(dataland)):
             mini = ()
             username = dataland[i]["username"]
             score = dataland[i]["score"]
             mini = ((score, username))
             lijstland.append(mini)
-
+        #if there are less than ten players in a country fill the remainder of the list
         while len(lijstland) < 10:
             mini = ()
             username = "None"
             score = int(0)
             mini = ((score, username))
             lijstland.append(mini)
-
-        print(lijstland)
-
+        #display country's ranking
         lijstland = sorted(lijstland, reverse=True)
         return render_template("rankings.html", pscore = pscore, name1 = lijstland[0][1], score1 = lijstland[0][0], name2 = lijstland[1][1], score2 = lijstland[1][0], name3 = lijstland[2][1], score3 = lijstland[2][0], name4 = lijstland[3][1], score4 = lijstland[3][0], name5 = lijstland[4][1], score5 = lijstland[4][0], name6 = lijstland[5][1], score6 = lijstland[5][0], name7 = lijstland[6][1], score7 = lijstland[6][0], name8 = lijstland[7][1], score8 = lijstland[7][0], name9 = lijstland[8][1], score9 = lijstland[8][0], name10 = lijstland[9][1], score10 = lijstland[9][0])
 
@@ -209,11 +203,11 @@ def ranking():
         lijst = []
         info = db.execute("SELECT * FROM users")
 
-        # persoonlijke score
+        # personal score
         user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
         pscore = user[0]["score"]
 
-        # wereldranking
+        # worldranking
         for i in range(len(info)):
             mini= ()
             username = info[i]["username"]
@@ -234,21 +228,20 @@ def play():
         db.execute("UPDATE users SET qnumber = :qnumber WHERE id=:id",id=session["user_id"], qnumber = 0)
         db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = 0)
 
-        # voorbeeld URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
+        # example URL: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
         link = str('https://opentdb.com/api.php?amount=1&category=')
 
-        # categorie nummer maken
+        # category number
         category = request.form["category"]
-        # TODO van categorie naar nummer
         link += str(category)
 
         # & toevoegen
         link += str('&difficulty=')
 
-        # difficulty nummer maken
+        # difficulty number
         difficulty = str(request.form["difficulty"])
         link += str(difficulty)
-
+        #selects difficulty points level
         if difficulty == 'easy':
             punten = 1
         elif difficulty == 'medium':
@@ -256,9 +249,8 @@ def play():
         else:
             punten = 3
         db.execute("UPDATE users SET difficulty = :difficulty WHERE id=:id", difficulty = punten, id=session["user_id"])
-        # laatste deel toevoegen '&type=multiple)'
+        # makes sure all questions are multiple choise
         link += str('&type=multiple')
-        print(link)
         db.execute("UPDATE users SET url = :url WHERE id=:id", url= link, id=session["user_id"])
 
         return redirect(url_for("game"))
@@ -274,25 +266,20 @@ def game():
     '''game'''
     # POST methode
     if request.method == "POST":
-
+        #keeps track how many questions where awnsered right
         streak = db.execute("SELECT streak FROM users WHERE id=:id",id=session["user_id"])
         streak = streak[0]['streak']
 
-        # goede antwoordpositie eruit halen
+        # remember the posistion of the correct awnser
         goedantwoord = db.execute("SELECT correct FROM users WHERE id=:id",id=session["user_id"])
         goedantwoord = goedantwoord[0]['correct']
 
         punten = db.execute("SELECT difficulty FROM users WHERE id=:id",id=session["user_id"])
         punten = punten[0]['difficulty']
-        # of antwoord goed is
+        # checks if given awnser is correct
         if request.form.get("option") == goedantwoord:
             streak += (1 * punten)
             db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak)
-            print("goed")
-
-        # score += punten
-        else:
-            print("fout")
 
         return redirect(url_for("game"))
 
@@ -300,12 +287,11 @@ def game():
         # GET methode
         keuzeantwoorden = []
 
-        # initialize, vraag i
+        # initialize, question i
         i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         i = i[0]['qnumber']
         url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
 
-        #db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
         if i == 9:
             return redirect(url_for("end"))
         data = question(url[0]["url"])
@@ -350,10 +336,11 @@ def end():
         return render_template("endpage.html")
 
     else:
+        #displays the points gotten and updates total points
         streak = db.execute("SELECT streak FROM users WHERE id=:id",id=session["user_id"])
         streak = streak[0]['streak']
         score = db.execute("SELECT score FROM users WHERE id=:id", id=session["user_id"])
         score = score[0]["score"]
         score += streak
         db.execute("UPDATE users SET score = :score WHERE id =:id", id=session["user_id"], score = score)
-        return render_template("endpage.html", streak=streak)
+        return render_template("endpage.html", pscore=streak)
