@@ -235,7 +235,7 @@ def play():
         category = request.form["category"]
         link += str(category)
 
-        # & toevoegen
+        #add an &
         link += str('&difficulty=')
 
         # difficulty number
