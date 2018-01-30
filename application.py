@@ -98,6 +98,14 @@ def indexnot():
         # redirect user to login form
         return redirect(url_for("/"))
 
+@app.route("/profile")
+def profile():
+    """See user profile."""
+
+    if request.method == "GET":
+        # redirect user to profile
+        return render_template("profile.html")
+
 @app.route("/password", methods=["GET", "POST"])
 @login_required
 def password():
@@ -188,6 +196,7 @@ def ranking():
             score = dataland[i]["score"]
             mini = ((score, username))
             lijstland.append(mini)
+
         #if there are less than ten players in a country fill the remainder of the list
         while len(lijstland) < 10:
             mini = ()
@@ -195,6 +204,7 @@ def ranking():
             score = int(0)
             mini = ((score, username))
             lijstland.append(mini)
+
         #display country's ranking
         lijstland = sorted(lijstland, reverse=True)
         return render_template("rankings.html", pscore = pscore, name1 = lijstland[0][1], score1 = lijstland[0][0], name2 = lijstland[1][1], score2 = lijstland[1][0], name3 = lijstland[2][1], score3 = lijstland[2][0], name4 = lijstland[3][1], score4 = lijstland[3][0], name5 = lijstland[4][1], score5 = lijstland[4][0], name6 = lijstland[5][1], score6 = lijstland[5][0], name7 = lijstland[6][1], score7 = lijstland[6][0], name8 = lijstland[7][1], score8 = lijstland[7][0], name9 = lijstland[8][1], score9 = lijstland[8][0], name10 = lijstland[9][1], score10 = lijstland[9][0])
