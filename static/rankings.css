@@ -11,51 +11,62 @@
 
 #big{
     width: 400px;
-    height: 220px;
+    height: 620px;
     margin-left: calc(50% - 200px);
     margin-top: 50px;
     overflow: scroll;
-    background-color: grey;
+    color: white;
+}
+
+#head{
+    width: 400px;
+    height: 45px;
+    color: #333;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 10px;
+    opacity: 0.64;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
 #first{
     width: 400px;
     height: 45px;
     color: #333;
+    margin-top: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
 #count{
     width: 60px;
     height: 26px;
-    background-color: white;
+    color: white;
     text-align: center;
     display: inline-block;
     padding-top: 8px;
     float: left;
     margin-top: 2px;
-    color: #333;
 }
 
 #name{
     width: 200px;
     height: 30px;
-    background-color: white;
     text-align: center;
     display: inline-block;
     padding-top: 8px;
-    color: #333;
     margin-left: 28px;
+    color: white;
 }
 
 #punten{
     width: 80px;
     height: 26px;
-    background-color: white;
     text-align: center;
     display: inline-block;
     padding-top: 8px;
     margin-left: 25px;
-    color: #333;
+    color: white;
 }
 
 select{
@@ -67,4 +78,8 @@ select{
 #submit{
     display: inline-block;
     margin-top: 0px;
+}
+
+#redbar{
+    height: 900px;
 }
