@@ -271,8 +271,17 @@ li a{
 
 #logout{
     position: absolute;
-    right: 20%;
+    right: calc(10% + 80px);
     width: 100px;
     height: 27px;
     margin-top: 15px;
+}
+
+#logout a{
+    text-decoration: none;
+    color: #E03A3E;
+}
+
+#logout a:hover{
+    opacity: 0.6;
 }

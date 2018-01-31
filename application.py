@@ -347,3 +347,15 @@ def profile():
     else:
         # GET method
         return render_template("profile.html")
+
+@app.route("/my_link/")
+def timer():
+    print ('tasks done, now sleeping for 10 seconds')
+    for t in xrange(10,0,-1):
+        time.sleep(1)
+        print (t)
+
+    for t in xrange(10,0,-1):
+        time.sleep(1)
+        sys.stdout.write(str(i)+' ')
+        sys.stdout.flush()
