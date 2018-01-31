@@ -2,7 +2,7 @@
     <head>
          <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
         <link href="{{ url_for('static', filename='game.css') }}" rel="stylesheet"/>
-        <link href="{{ url_for('static', filename='script.js') }}" rel="javascript"/>
+        <link href="{{ url_for('static', filename='timer.js') }}" rel="javascript"/>
         <title>Game</title>
     </head>
     <body>
@@ -25,8 +25,10 @@
                 <div id="label">3</div><input type="radio" accesskey="3" name="option" value="2"><p>{{option_three}}</p></input><br>
                 <div id="label">4</div><input type="radio" accesskey="4" name="option" value="3"><p>{{option_four}}</p></input><br>
             </div>
+            <div id="demo">timer()</div>
             <button id="submit" type="submit" name="submit" value="next" onkeypress="checkDo()">next question</button>
         </form>
         </div>
+        <meta http-equiv="refresh" content="5; url={{ url_for('game') }}" method="post"/>
     </body>
 </html>
