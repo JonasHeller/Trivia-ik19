@@ -1,7 +1,7 @@
-#READ ME
+# READ ME
 
-###Trivia website Whoopdeedoo
-###made by Tom Handgraaf, Morris van Bergem & Jonas Heller
+### Trivia website Whoopdeedoo
+### Made by Tom Handgraaf, Morris van Bergem & Jonas Heller
 
 ## Features
 On our website Whoopdeedoo you can play numerous quizzes all about trivia.
