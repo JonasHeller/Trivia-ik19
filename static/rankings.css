@@ -7,6 +7,7 @@
     margin-top: 50px;
     margin-bottom: 20px;
     margin-left: calc(50% - 235px);
+    text-transform: none;
 }
 
 #big{
@@ -77,9 +78,9 @@ select{
 
 #submit{
     display: inline-block;
-    margin-top: 0px;
+    margin-top: 20px;
 }
 
 #redbar{
-    height: 900px;
+    height: 1000px;
 }

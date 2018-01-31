@@ -55,9 +55,11 @@
     text-transform: uppercase;
 }
 
-#demo{
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    color: #333;
+#sec{
+    width: 300px;
+    height: 20px;
+    padding: 10px;
+    color: white;
+    margin: auto;
+    margin-top: -40px;
 }

@@ -1,19 +1,26 @@
 #user{
-    width: 400px;
+    width: 700px;
     height: 40px;
     color: white;
+    font-size: 16px;
     text-align: center;
     margin: auto;
     margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 #pass{
     width: 400px;
-    height: 700px;
+    height: 500px;
     margin: auto;
 }
 
 #submit{
-    margin-top: 110px;
+    margin-top: 20px;
+    width: 150px;
+}
+
+#field{
+    margin-bottom: 0px;
+    margin-top: 20px;
+    font-size: 14px;
 }

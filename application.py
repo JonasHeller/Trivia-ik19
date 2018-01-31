@@ -140,7 +140,7 @@ def ranking():
 
         # Display country's ranking
         lijstland = sorted(lijstland, reverse=True)
-        return render_template("rankings.html", pscore = user[0]["score"], name1 = lijstland[0][1], score1 = lijstland[0][0], name2 = lijstland[1][1], score2 = lijstland[1][0], name3 = lijstland[2][1], score3 = lijstland[2][0], name4 = lijstland[3][1], score4 = lijstland[3][0], name5 = lijstland[4][1], score5 = lijstland[4][0], name6 = lijstland[5][1], score6 = lijstland[5][0], name7 = lijstland[6][1], score7 = lijstland[6][0], name8 = lijstland[7][1], score8 = lijstland[7][0], name9 = lijstland[8][1], score9 = lijstland[8][0], name10 = lijstland[9][1], score10 = lijstland[9][0])
+        return render_template("rankings.html", pscore = user[0]["score"], countryrank=request.form.get("country"), name1 = lijstland[0][1], score1 = lijstland[0][0], name2 = lijstland[1][1], score2 = lijstland[1][0], name3 = lijstland[2][1], score3 = lijstland[2][0], name4 = lijstland[3][1], score4 = lijstland[3][0], name5 = lijstland[4][1], score5 = lijstland[4][0], name6 = lijstland[5][1], score6 = lijstland[5][0], name7 = lijstland[6][1], score7 = lijstland[6][0], name8 = lijstland[7][1], score8 = lijstland[7][0], name9 = lijstland[8][1], score9 = lijstland[8][0], name10 = lijstland[9][1], score10 = lijstland[9][0])
 
     else:
         # GET method
@@ -150,7 +150,7 @@ def ranking():
 
         # Personal score
         user = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
-
+        country = user[0]["country"]
         # Counry ranking
         for i in range(len(info)):
             mini= ()
@@ -161,7 +161,7 @@ def ranking():
 
         # Display country's ranking
         lijst = sorted(lijst, reverse=True)
-        return render_template("rankings.html", pscore = user[0]["score"], name1 = lijst[0][1], score1 = lijst[0][0], name2 = lijst[1][1], score2 = lijst[1][0], name3 = lijst[2][1], score3 = lijst[2][0], name4 = lijst[3][1], score4 = lijst[3][0], name5 = lijst[4][1], score5 = lijst[4][0], name6 = lijst[5][1], score6 = lijst[5][0], name7 = lijst[6][1], score7 = lijst[6][0], name8 = lijst[7][1], score8 = lijst[7][0], name9 = lijst[8][1], score9 = lijst[8][0], name10 = lijst[9][1], score10 = lijst[9][0])
+        return render_template("rankings.html", pscore = user[0]["score"], name1 = lijst[0][1], countryrank=country, score1 = lijst[0][0], name2 = lijst[1][1], score2 = lijst[1][0], name3 = lijst[2][1], score3 = lijst[2][0], name4 = lijst[3][1], score4 = lijst[3][0], name5 = lijst[4][1], score5 = lijst[4][0], name6 = lijst[5][1], score6 = lijst[5][0], name7 = lijst[6][1], score7 = lijst[6][0], name8 = lijst[7][1], score8 = lijst[7][0], name9 = lijst[8][1], score9 = lijst[8][0], name10 = lijst[9][1], score10 = lijst[9][0])
 
 
 @app.route("/play", methods=["GET", "POST"])
@@ -215,17 +215,17 @@ def game():
     if request.method == "POST":
         # Keeps track how many questions where awnsered right
         streak = db.execute("SELECT streak FROM users WHERE id=:id",id=session["user_id"])
-
+        streak = streak[0]["streak"]
         # Remember the posistion of the correct awnser
         goedantwoord = db.execute("SELECT correct FROM users WHERE id=:id",id=session["user_id"])
 
         # Selects difficulty score
         punten = db.execute("SELECT difficulty FROM users WHERE id=:id",id=session["user_id"])
-
+        punten = punten[0]['difficulty']
         # Checks if given awnser is correct
         if request.form.get("option") == goedantwoord[0]['correct']:
-            streak += (1 * punten[0]['difficulty'])
-            db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak[0]['streak'])
+            streak += (1 * punten)
+            db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak)
 
         return redirect(url_for("game"))
 

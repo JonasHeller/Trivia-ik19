@@ -2,7 +2,6 @@
     <head>
          <link href="{{ url_for('static', filename='stylesheet.css') }}" rel="stylesheet"/>
         <link href="{{ url_for('static', filename='game.css') }}" rel="stylesheet"/>
-        <link href="{{ url_for('static', filename='timer.js') }}" rel="javascript"/>
         <title>Game</title>
     </head>
     <body>
@@ -11,6 +10,7 @@
                 <a href="index">WHOOPDEEDOO</a>
             </div>
             <div id="profile"><a href="profile">profile</a></div>
+            <div id="logout"><a href="/">logout</a></div>
             </div>
         </div>
         <div id="redbar">
@@ -25,10 +25,10 @@
                 <div id="label">3</div><input type="radio" accesskey="3" name="option" value="2"><p>{{option_three}}</p></input><br>
                 <div id="label">4</div><input type="radio" accesskey="4" name="option" value="3"><p>{{option_four}}</p></input><br>
             </div>
-            <div id="demo">timer()</div>
+            <div id="sec">you have 20 seconds to answer!</div>
             <button id="submit" type="submit" name="submit" value="next" onkeypress="checkDo()">next question</button>
         </form>
         </div>
-        <meta http-equiv="refresh" content="5; url={{ url_for('game') }}" method="post"/>
+        <meta http-equiv="refresh" content="20; url={{ url_for('game') }}" method="post"/>
     </body>
 </html>
