@@ -21,10 +21,13 @@
                 <h1>welcome{{user}}</h1>
             </div>
             <div id="pass">
-                <form>
+                <form action="{{ url_for('profile') }}" method="post">
                 <input id="field" name="password" placeholder="old password" type="password"/>
                 <input id="field" name="newpassword" placeholder="new password" type="password"/>
                 <input id="field" name="passwordagain" placeholder="type password again" type="password"/>
+                <button id="submit" type="submit" name="submit" value="update1">update password</button>
+                </form>
+                <form action="{{ url_for('profile') }}" method="post">
                 <div id="select">
                     <select name="country" id="selects">
                         <option value="AF">Afghanistan</option>
@@ -278,7 +281,7 @@
                         <option value="ZW">Zimbabwe</option>
                     </select>
                 </div>
-                <button id="submit" type="submit" name="update" value="update">update</button>
+                <button id="submit" type="submit" name="submit" value="update2">update country</button>
             </form>
             </div>
         </div>

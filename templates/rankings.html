@@ -18,8 +18,8 @@
         <div id="redbar">
         <div id="points">you have {{pscore}} points!</div>
         <div>
-            <form>
-            <select id="selects" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+            <form action="{{ url_for('ranking') }}" method="post">
+            <select name="country" id="selects" onchange="this.options[this.selectedIndex].value && (window.location = "/rankings?country=" + this.options[this.selectedIndex].value);">
                 <option value="">Choose Country</option>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Åland Islands</option>
