@@ -271,7 +271,7 @@ li a{
 
 #logout{
     position: absolute;
-    right: 20%;
+    right: calc(10% + 80px);
     width: 100px;
     height: 27px;
     margin-top: 15px;
