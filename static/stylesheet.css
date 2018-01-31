@@ -1,7 +1,6 @@
 body{
     font-family: "San Fransisco", "SF Compact Text", "SF Mono Text", "SF Pro Display", "Graphik", "Roboto", "Helvetica", "Avenir", "Calibri";
     font-size: 14px;
-    color: #333333;
     background-image: url("../static/img/wall.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -253,19 +252,4 @@ li a{
 
 #submit2{
     margin-top: 251px;
-}
-
-#field{
-    width: 200px;
-    height: 32px;
-    color: rgba(208, 2, 27, 0.6);
-    font-weight: 500;
-    background-color: white;
-    font-size: 15px;
-    border-radius: 3px;
-    border: 0px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.10);
-    padding-left: 20px;
-    margin-bottom: 20px;
-    cursor: default;
 }

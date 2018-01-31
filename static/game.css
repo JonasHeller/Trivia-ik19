@@ -54,3 +54,10 @@
     opacity: 0.5;
     text-transform: uppercase;
 }
+
+#demo{
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    color: #333;
+}
