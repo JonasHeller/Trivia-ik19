@@ -235,10 +235,11 @@ def game():
 
         # Selects question number and url
         i = db.execute("SELECT qnumber FROM users WHERE id=:id",id=session["user_id"])
+        i = i[0]['qnumber']
         url = db.execute("SELECT url FROM users WHERE id=:id",id=session["user_id"])
 
         # Checks if ten questions have been asked
-        if i[0]['qnumber'] == 9:
+        if i == 9:
             return redirect(url_for("end"))
         data = question(url[0]["url"])
 
