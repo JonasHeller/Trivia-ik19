@@ -221,10 +221,10 @@ def game():
 
         # Selects difficulty score
         punten = db.execute("SELECT difficulty FROM users WHERE id=:id",id=session["user_id"])
-
+        punten = punten[0]['difficulty']
         # Checks if given awnser is correct
         if request.form.get("option") == goedantwoord[0]['correct']:
-            streak += (1 * punten[0]['difficulty'])
+            streak += (1 * punten)
             db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak[0]['streak'])
 
         return redirect(url_for("game"))
