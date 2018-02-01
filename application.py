@@ -225,11 +225,7 @@ def game():
         # Checks if given awnser is correct
         if request.form.get("option") == goedantwoord[0]['correct']:
             streak += (1 * punten)
-<<<<<<< HEAD
             db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak)
-=======
-            db.execute("UPDATE users SET streak = :streak WHERE id=:id",id=session["user_id"], streak = streak[0]['streak'])
->>>>>>> b58901e0ec1c112e18a61cb4f4e7cbc0fd198481
 
         return redirect(url_for("game"))
 
