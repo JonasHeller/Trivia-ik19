@@ -346,5 +346,9 @@ def profile():
 
     else:
         # GET method
-        return render_template("profile.html")
+        user = db.execute("SELECT username FROM users WHERE id = :id", id=session["user_id"])
+        user = user[0]["username"]
+        country = db.execute("SELECT country FROM users WHERE id=:id", id=session["user_id"])
+        country = country[0]["country"]
+        return render_template("profile.html", user=user,country=country)
 
