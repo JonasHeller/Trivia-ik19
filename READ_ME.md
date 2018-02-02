@@ -23,3 +23,7 @@ The structure of our repository is quite easy.
 The main python application is in the main folder, together with our helpers file and the database.
 All our HTML pages are located in the templates folder. Our CSS stylesheets, images and our Javascript are all in the folder static.
 In Helpers are some of the functions we needed throughout the making of our website.
+
+### Impression video
+If you want to see the website in action, you can watch the video below!
+https://vimeo.com/253854358
